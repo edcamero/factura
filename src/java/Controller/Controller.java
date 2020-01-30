@@ -32,13 +32,18 @@ public class Controller extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                String controller="/"+request.getParameter("controller");
+//                  response.setContentType("text/html;charset=UTF-8");
+//                PrintWriter out = response.getWriter();
+                
+                String controller=request.getParameter("controller")+"Controller";
+//                out.print(controller);
                 //String action=request.getParameter("action");
                 RequestDispatcher rd = null;
                 //request.setAttribute(action, action);
-                rd = request.getRequestDispatcher(controller);
+
+                request.getRequestDispatcher(controller).forward(request, response);
                 //session.setAttribute("metodo", metodo);
-                rd.forward(request, response);
+                
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

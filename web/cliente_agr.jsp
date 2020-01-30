@@ -9,6 +9,7 @@
 <html>
     <jsp:include page="head.jsp" flush="true" />
     <body>
+    <jsp:include page="header.jsp" flush="true" />
  <header>
     <div class="container bg-dark my-5 py-2 text-center">
       <h1 class="text-white">Agregar Cliente    ${sessionScope.metodo}
@@ -19,7 +20,7 @@
   </header>
                         <div class="container">
 
-        <form action="/factura/ClienteController" method="POST"  role="form" data-toggle="validator">
+        <form action="/factura/Controller?controller=Cliente&action=agregar" method="POST"  role="form" data-toggle="validator">
 
             <div class="row">
                   <div class="col form-group">

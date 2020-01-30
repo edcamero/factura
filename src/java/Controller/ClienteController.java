@@ -37,28 +37,7 @@ public class ClienteController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        String action= request.getParameter("action");
-        
-        switch(action){
-            case "agregar":
-                
-                    response.setContentType("text/html;charset=UTF-8");
-                    Cajero cajero=new Cajero(1, "enyerson", "camero ","123456");
-                    Cliente c=new Cliente(request.getParameter("documento"),request.getParameter("nombre"),request.getParameter("apellido"),request.getParameter("direccion"), request.getParameter("telefono"), request.getParameter("email"));
-                    Fachada fachada=Fachada.getInstancia();
-                    fachada.AgregarCliente(c, cajero);
-                    response.setStatus(202);
-             break;
-             
-            case "agregar-form":
-                HttpSession session = request.getSession(true);
-                RequestDispatcher rd = null;
-                String metodo=request.getMethod();
-                rd = request.getRequestDispatcher("/cliente_agr.jsp");
-                session.setAttribute("metodo", metodo);
-                rd.forward(request, response);
-            break;
-        }
+       
         
         
         
@@ -76,7 +55,21 @@ public class ClienteController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String action= request.getParameter("action");
+        
+        switch(action){
+            case "agregar":
+                
+                    HttpSession session = request.getSession(true);
+                    RequestDispatcher rd = null;
+                    String metodo=request.getMethod();
+                    rd = request.getRequestDispatcher("/cliente_agr.jsp");
+                    session.setAttribute("metodo", metodo);
+                    rd.forward(request, response);
+             break;
+             
+            
+        }
     }
 
     /**
@@ -90,7 +83,25 @@ public class ClienteController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String action= request.getParameter("action");
+        switch(action){
+            case "agregar":
+                
+                    response.setContentType("text/html;charset=UTF-8");
+                    Cajero cajero=new Cajero(1, "enyerson", "camero ","123456");
+                    Cliente c=new Cliente(request.getParameter("documento"),request.getParameter("nombre"),request.getParameter("apellido"),request.getParameter("direccion"), request.getParameter("telefono"), request.getParameter("email"));
+                    Fachada fachada=Fachada.getInstancia();
+                    if(fachada.AgregarCliente(c, cajero)){
+                        request.setAttribute("mensaje","ok");
+                        response.setStatus(200);
+                    }else{
+                        request.setAttribute("mensaje","eror");
+                        response.setStatus(400);
+                    }
+                    
+             break;
+            
+        }
     }
 
     /**
