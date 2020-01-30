@@ -5,9 +5,6 @@
  */
 package Controller;
 
-import Logica.Fachada;
-import VO.Cajero;
-import VO.Cliente;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -16,14 +13,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author blade
  */
-@WebServlet(name = "ClienteController", urlPatterns = {"/ClienteController"})
-public class ClienteController extends HttpServlet {
+@WebServlet(name = "Controller", urlPatterns = {"/Controller"})
+public class Controller extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,32 +32,13 @@ public class ClienteController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        String action= request.getParameter("action");
-        
-        switch(action){
-            case "agregar":
-                
-                    response.setContentType("text/html;charset=UTF-8");
-                    Cajero cajero=new Cajero(1, "enyerson", "camero ","123456");
-                    Cliente c=new Cliente(request.getParameter("documento"),request.getParameter("nombre"),request.getParameter("apellido"),request.getParameter("direccion"), request.getParameter("telefono"), request.getParameter("email"));
-                    Fachada fachada=Fachada.getInstancia();
-                    fachada.AgregarCliente(c, cajero);
-                    response.setStatus(202);
-             break;
-             
-            case "agregar-form":
-                HttpSession session = request.getSession(true);
+                String controller="/"+request.getParameter("controller");
+                //String action=request.getParameter("action");
                 RequestDispatcher rd = null;
-                String metodo=request.getMethod();
-                rd = request.getRequestDispatcher("/cliente_agr.jsp");
-                session.setAttribute("metodo", metodo);
+                //request.setAttribute(action, action);
+                rd = request.getRequestDispatcher(controller);
+                //session.setAttribute("metodo", metodo);
                 rd.forward(request, response);
-            break;
-        }
-        
-        
-        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
