@@ -179,6 +179,45 @@ public class ArticuloController extends HttpServlet {
                      }
                     
              break;
+             
+             
+             
+             
+             case "eliminar":
+                
+                    response.setContentType("text/html;charset=UTF-8");
+                    nombre=request.getParameter("artiNombre");
+                    //Integer.parseInt(request.getParameter("artiId"))
+                    id=Integer.parseInt(request.getParameter("artiId"));
+                    
+//                    nombre=request.getParameter("artiNombre");
+                    valor=Integer.parseInt(request.getParameter("artiValorunitario"));
+                    exist=Integer.parseInt(request.getParameter("artiExistencia"));
+                    articulo=new Articulo(id,nombre, valor, exist);
+                   // Cliente c=new Cliente(request.getParameter("documento"),request.getParameter("nombre"),request.getParameter("apellido"),request.getParameter("direccion"), request.getParameter("telefono"), request.getParameter("email"));
+                    
+//                    out=response.getWriter();
+//                        out.print(gson.toJson(articulo));
+//
+//                        //ArrayList<Pelicula> pelis=PeliculaDao.l
+//                        out.close();
+                   
+                    if(fachada.eliminarArticulo(id, cajero)){
+                         out=response.getWriter();
+                        out.print(gson.toJson(articulo));
+
+                        //ArrayList<Pelicula> pelis=PeliculaDao.l
+                        out.close();
+                    }else{
+                        out=response.getWriter();
+                        out.print("error");
+                       
+
+                        //ArrayList<Pelicula> pelis=PeliculaDao.l
+                        out.close();
+                     }
+                    
+             break;
         }
         
            }

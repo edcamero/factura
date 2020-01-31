@@ -14,7 +14,7 @@
           Facturas
         </a>
         <div class="dropdown-menu" aria-labelledby="dropmenufactura">
-          <a class="dropdown-item" href="">Agregar</a>
+          <a class="dropdown-item" href="Controller?controller=Factura&action=agregar" id="dropmenuarticul">Agregar</a>
           <a class="dropdown-item" href="#">Listar</a>
         </div>
       </li>

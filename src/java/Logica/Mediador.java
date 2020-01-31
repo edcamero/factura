@@ -112,8 +112,9 @@ ArticuloDao articuloDao;
     
     @Override
     public boolean eliminarArticulo(int id, Cajero cajero) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+        articuloDao=new ArticuloDao();
+        return articuloDao.eliminar(id, cajero);
+        }
 
    
 }

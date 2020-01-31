@@ -20,10 +20,10 @@
     </div>
     
   </header>
-                        <div class="container">
+    <div class="container">
 
-        
-                            <form action="/factura/Controller?controller=Cliente&action=editar&id=<%=cliente.getClieId()%>" method="POST"  role="form" data-toggle="validator">
+
+        <form action="/factura/Controller?controller=Cliente&action=editar&id=<%=cliente.getClieId()%>" method="POST"  role="form" data-toggle="validator">
 
             <div class="row">
                   <div class="col form-group">
@@ -96,6 +96,7 @@
               data () {
                 return {
                  Cliente:{}
+                
                 }
               },
               mounted () {

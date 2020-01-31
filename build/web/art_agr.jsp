@@ -72,7 +72,7 @@
             <td>
                 <div class="btn-group">
                     <button type="button" class="btn btn-primary btn-sm" @click="editar(index)" >Editar</button>
-                    <button type="button" class="eliminar btn btn-danger btn-sm" @click="eliminarCliente(cliente,index)"  >Eliminar</button>
+                    <button type="button" class="eliminar btn btn-danger btn-sm" @click="eliminar(index)"  >Eliminar</button>
                 </div>
             </td>
           </tr>
@@ -142,7 +142,19 @@
                                //this.articulo.artiNombre="";
                                this.articulo={'artiId':'','artiNombre':'','artiValorunitario':'','artiExistencia':''};
                             },
-                          
+                           
+                           
+                           
+                           
+                           eliminar : function (index){
+                               //this.articulo.artiNombre="";
+                               this.articulo=this.articulos[index];
+                               axios.post('/factura/Controller?controller=Articulo&action=eliminar',this.createdFormData())
+                                    .then(response => (aux=response.data,
+                                    this.articulos.splice( index, 1 )
+                                    ));
+
+                                      },
                           
                           
 
