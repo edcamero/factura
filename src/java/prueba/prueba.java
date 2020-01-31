@@ -28,13 +28,15 @@ public class prueba {
        
        
        //Cliente cliente=new Cliente("1092343350","vanessa","sayago", "villa del rosario", "3123496942", "vanessasayago@hotmail.com");
-//       Articulo c=new Articulo("AZ",7000, 100);
+      Articulo c=new Articulo("AZ carta",7000, 100);
        Cajero cajero=new Cajero(1, "enyerson", "camero ","123456");
-       
-        Articulo c=ad.buscar(9);
-        c.setArtiExistencia(666);
+       c=Fachada.getInstancia().agregarArticulo2(c, cajero);
+        System.out.println(c.toString());
+//        Articulo c=ad.buscar(9);
+//        c.setArtiExistencia(666);
 //        Fachada.getInstancia().editarArticulo(c, cajero);
-        System.out.println(Fachada.getInstancia().editarArticulo(c, cajero));
+//        System.out.println(Fachada.getInstancia().editarArticulo(c, cajero));
+        
         //ad.actualizar(c, cajero);
 //      
 //       Cliente cliente=cd.buscar(1);

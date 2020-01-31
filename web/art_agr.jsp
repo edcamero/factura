@@ -113,7 +113,11 @@
                                                         this.articulos.push(this.aux),
                                                        this.articulo={'artiId':'','artiNombre':'','artiValorunitario':'','artiExistencia':''}))
 
-                              },editar:function (index){
+                              },
+                              
+            
+            
+                                editar:function (index){
                                   this.editable=true;
                                  this.articulo=this.articulos[index];
                                  this.aux=index;
@@ -125,14 +129,19 @@
                                   this.editable=false;
                                   
                                   axios.post('/factura/Controller?controller=Articulo&action=editar',this.createdFormData())
-                                    .then(response => (
-                                                        this.articulos[aux]=response.data,
-                                                       this.articulo={'artiId':'','artiNombre':'','artiValorunitario':'','artiExistencia':''}))
+                                    .then(response => (this.articulos[aux]=response.data));
+                              this.limpiar();
+                            
+                                    
 
-                              },
-
-                          
-                                
+                              }
+                              ,
+                              
+                            
+                            limpiar : function (){
+                               //this.articulo.artiNombre="";
+                               this.articulo={'artiId':'','artiNombre':'','artiValorunitario':'','artiExistencia':''};
+                            },
                           
                           
                           
