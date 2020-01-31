@@ -18,7 +18,7 @@ import java.util.ArrayList;
  * @author blade
  */
 public class Mediador implements IMediador {
-
+ArticuloDao articuloDao;
     public Mediador() {
     }
 
@@ -40,7 +40,7 @@ public class Mediador implements IMediador {
     @Override
     public boolean eliminarCliente(Cliente cliente, Cajero cajero) {
      ClienteDao clienteDao=new ClienteDao();
-       return clienteDao.actualizar(cliente, cajero);
+       return clienteDao.eliminar(cliente.getClieId(), cajero);
     }
 
    
@@ -74,6 +74,11 @@ public class Mediador implements IMediador {
         ArticuloDao articuloDao=new ArticuloDao();
         return articuloDao.registrar(articulo, cajero);
     }
+    
+    public Articulo agregarArticulo2(Articulo articulo, Cajero cajero) {
+        ArticuloDao articuloDao=new ArticuloDao();
+        return articuloDao.registrar2(articulo, cajero);
+    }
 
   
     @Override
@@ -83,8 +88,9 @@ public class Mediador implements IMediador {
 
     @Override
     public ArrayList<Articulo> listarArticulos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+        articuloDao=new ArticuloDao();
+        return articuloDao.obtener();
+         }
 
     @Override
     public boolean agregarFactura(Facturacliente factura, Cajero cajero) {
@@ -99,7 +105,8 @@ public class Mediador implements IMediador {
     
     @Override
     public boolean editarArticulo(Articulo articulo, Cajero cajero) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        articuloDao=new ArticuloDao();
+        return articuloDao.actualizar(articulo, cajero);
     }
 
     

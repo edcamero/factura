@@ -5,8 +5,11 @@
  */
 package Logica;
 
+import VO.Articulo;
 import VO.Cajero;
 import VO.Cliente;
+import VO.Facturacliente;
+import java.util.ArrayList;
 
 /**
  *
@@ -28,5 +31,67 @@ public class Fachada {
     
     public boolean AgregarCliente(Cliente cliente,Cajero Cajero){
         return mediador.agregarCliente(cliente, Cajero);
+    }
+    
+    public ArrayList<Cliente>ListarClientes(){
+        return mediador.listarClientes();
+    }
+
+    
+   
+    public boolean editarCliente(Cliente cliente, Cajero cajero) {
+        return mediador.editarCliente(cliente, cajero);
+    }
+
+   
+    public boolean eliminarCliente(Cliente cliente, Cajero cajero) {
+         return this.mediador.eliminarCliente(cliente, cajero);
+    }
+
+  
+   
+   
+    public Cliente buscarCliente(int id) {
+       return this.mediador.buscarCliente(id);
+//To change body of generated methods, choose Tools | Templates.
+    }
+
+   
+    public boolean agregarArticulo(Articulo articulo, Cajero cajero) {
+      return  mediador.agregarArticulo(articulo, cajero);
+    }
+
+     public Articulo agregarArticulo2(Articulo articulo, Cajero cajero) {
+      return  mediador.agregarArticulo2(articulo, cajero);
+    }
+
+    public boolean editarArticulo(Articulo articulo, Cajero cajero) {
+       return mediador.editarArticulo(articulo, cajero);
+        //To change body of generated methods, choose Tools | Templates.
+    }
+
+  
+    public boolean eliminarArticulo(int id, Cajero cajero) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+
+    public Articulo buscarArticulo(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+  
+    public ArrayList<Articulo> listarArticulos() {
+           return this.mediador.listarArticulos();
+         }
+
+  
+    public boolean agregarFactura(Facturacliente factura, Cajero cajero) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+   
+    public ArrayList<Facturacliente> listarFacturas() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

@@ -19,13 +19,10 @@
         </div>
       </li>
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="dropmenuarticulo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="nav-link " href="Controller?controller=Articulo&action=agregar" id="dropmenuarticulo"   >
           Articulo
         </a>
-        <div class="dropdown-menu" aria-labelledby="dropmenuarticulo">
-          <a class="dropdown-item" href="">Agregar</a>
-          <a class="dropdown-item" href="#">Listar</a>
-        </div>
+        
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="dropmenucliente" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -33,7 +30,7 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="dropmenucliente">
           <a class="dropdown-item" href="Controller?controller=Cliente&action=agregar">Agregar</a>
-          <a class="dropdown-item" href="#">Listar</a>
+          <a class="dropdown-item" href="Controller?controller=Cliente&action=listar">Listar</a>
         </div>
       </li>
     </ul>

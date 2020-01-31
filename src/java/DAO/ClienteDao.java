@@ -114,11 +114,17 @@ public class ClienteDao implements InterfazDao<Cliente>{
             
             rs=pst.executeQuery();
             
-            con.cerrar();
+            
             return true;
         } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
             Logger.getLogger(ArticuloDao.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }finally{
+           try {
+               con.cerrar();
+           } catch (SQLException ex) {
+               Logger.getLogger(ClienteDao.class.getName()).log(Level.SEVERE, null, ex);
+           }
+       }
         return false;
     }
 
@@ -137,7 +143,7 @@ public class ClienteDao implements InterfazDao<Cliente>{
 
 
                 rs=pst.executeQuery();
-                if(rs.getRow()>0)
+                
                     return true;
                 
                 

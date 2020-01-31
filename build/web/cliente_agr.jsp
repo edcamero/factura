@@ -12,7 +12,7 @@
     <jsp:include page="header.jsp" flush="true" />
  <header>
     <div class="container bg-dark my-5 py-2 text-center">
-      <h1 class="text-white">Agregar Cliente    ${sessionScope.metodo}
+      <h1 class="text-white">Agregar Cliente   
 
 </h1>
     </div>
@@ -62,7 +62,7 @@
           </div>
           <div class="col form-group">
               <label for="email"><strong>E-mail del Cliente</strong></label>
-              <input type="text" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Ingrese el email">
+              <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Ingrese el email">
               
           </div>
 
@@ -76,5 +76,10 @@
             
           </form>
     </div>
+ 
+ 
+ 
+ 
+        <jsp:include page="footer.jsp" flush="true" />
     </body>
 </html>

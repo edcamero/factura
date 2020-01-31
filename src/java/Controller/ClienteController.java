@@ -8,15 +8,16 @@ package Controller;
 import Logica.Fachada;
 import VO.Cajero;
 import VO.Cliente;
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -24,7 +25,7 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "ClienteController", urlPatterns = {"/ClienteController"})
 public class ClienteController extends HttpServlet {
-
+RequestDispatcher rd = null;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -34,14 +35,7 @@ public class ClienteController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        
-       
-        
-        
-        
-    }
+ 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -56,15 +50,39 @@ public class ClienteController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action= request.getParameter("action");
-        
+       
+        Fachada fachada=Fachada.getInstancia();
+        Cliente cliente;
+        int  id;
         switch(action){
             case "agregar":
                 
-                    HttpSession session = request.getSession(true);
-                    RequestDispatcher rd = null;
-                    String metodo=request.getMethod();
+                  
+                    
+                    
                     rd = request.getRequestDispatcher("/cliente_agr.jsp");
-                    session.setAttribute("metodo", metodo);
+                     rd.forward(request, response);
+             break;
+             
+             case "listar":
+                    
+                    //HttpSession session = request.getSession(true);
+                    
+                    rd = request.getRequestDispatcher("/cliente_lis.jsp");
+                    
+                    rd.forward(request, response);
+             break;
+             
+             
+              case "editar":
+                  id=Integer.parseInt(request.getParameter("id").toString());
+                    
+                    cliente=fachada.buscarCliente(id);
+                    request.setAttribute("cliente", cliente);
+                    //HttpSession session = request.getSession(true);
+                    
+                    rd = request.getRequestDispatcher("/cliente_edi.jsp");
+                    
                     rd.forward(request, response);
              break;
              
@@ -84,22 +102,82 @@ public class ClienteController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action= request.getParameter("action");
+        Fachada fachada=Fachada.getInstancia();
+        PrintWriter out;
+        Cliente cliente;
+        Gson gson=new Gson();
+        Cajero cajero=new Cajero(1, "enyerson", "camero ","123456");
         switch(action){
             case "agregar":
                 
                     response.setContentType("text/html;charset=UTF-8");
-                    Cajero cajero=new Cajero(1, "enyerson", "camero ","123456");
+                    
                     Cliente c=new Cliente(request.getParameter("documento"),request.getParameter("nombre"),request.getParameter("apellido"),request.getParameter("direccion"), request.getParameter("telefono"), request.getParameter("email"));
-                    Fachada fachada=Fachada.getInstancia();
+                    
                     if(fachada.AgregarCliente(c, cajero)){
-                        request.setAttribute("mensaje","ok");
-                        response.setStatus(200);
+                         response.setContentType("text/html;charset=UTF-8");
+                         rd = request.getRequestDispatcher("/cliente_lis.jsp");
+                    
+                    rd.forward(request, response);
                     }else{
                         request.setAttribute("mensaje","eror");
                         response.setStatus(400);
                     }
                     
              break;
+             
+            case "listar":
+                 ArrayList<Cliente> lista=fachada.ListarClientes();
+                 response.setContentType("text/html;charset=UTF-8");
+                 out=response.getWriter();
+                //ArrayList<Pelicula> pelis=PeliculaDao.listar(Integer.valueOf(request.getParameter("id")));
+                
+                out.print(gson.toJson(lista));
+                out.close();
+            break;
+            
+            case "eliminar":
+                Cliente cli=fachada.buscarCliente(Integer.parseInt(request.getParameter("id")));
+                       
+                
+                 cajero=new Cajero(1, "enyerson", "camero ","123456");
+                 if(fachada.eliminarCliente(cli, cajero)){
+                      response.setContentType("text/html;charset=UTF-8");
+                       out=response.getWriter();
+                       out.print(gson.toJson(cli));
+                       
+                       //ArrayList<Pelicula> pelis=PeliculaDao.l
+                       out.close();
+                 }else{
+                     response.sendError( response.SC_NOT_FOUND, "Error a eliminar cliente.");
+                 }
+                 
+                 
+                 
+               
+               
+            break;
+            
+            
+            case "editar":
+               
+                cliente=new Cliente(request.getParameter("documento"),request.getParameter("nombre"),request.getParameter("apellido"),request.getParameter("direccion"), request.getParameter("telefono"), request.getParameter("email"));       
+                cliente.setClieId(Integer.parseInt(request.getParameter("id")));
+                  cajero=new Cajero(1, "enyerson", "camero ","123456");
+                 if(fachada.editarCliente(cliente, cajero)){
+                      response.setContentType("text/html;charset=UTF-8");
+                       rd = request.getRequestDispatcher("/cliente_lis.jsp");
+                    
+                    rd.forward(request, response);
+                 }else{
+                     response.sendError( response.SC_NOT_FOUND, "Error a eliminar cliente.");
+                 }
+                 
+                 
+                 
+               
+               
+            break;
             
         }
     }

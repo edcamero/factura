@@ -8,6 +8,9 @@ package prueba;
 import DAO.ArticuloDao;
 import DAO.ClienteDao;
 import DAO.FacturaclienteDao;
+import Logica.Fachada;
+import VO.Articulo;
+import VO.Cajero;
 import VO.Detallefactura;
 import VO.Facturacliente;
 
@@ -25,9 +28,14 @@ public class prueba {
        
        
        //Cliente cliente=new Cliente("1092343350","vanessa","sayago", "villa del rosario", "3123496942", "vanessasayago@hotmail.com");
-       //Articulo c=new Articulo("AZ",7000, 100);
-//       Cajero cajero=new Cajero(1, "enyerson", "camero ","123456");
-//         Articulo c=ad.buscar(1);
+//       Articulo c=new Articulo("AZ",7000, 100);
+       Cajero cajero=new Cajero(1, "enyerson", "camero ","123456");
+       
+        Articulo c=ad.buscar(9);
+        c.setArtiExistencia(666);
+//        Fachada.getInstancia().editarArticulo(c, cajero);
+        System.out.println(Fachada.getInstancia().editarArticulo(c, cajero));
+        //ad.actualizar(c, cajero);
 //      
 //       Cliente cliente=cd.buscar(1);
 //       
@@ -45,12 +53,12 @@ public class prueba {
 //       }
        
 
-            for (Facturacliente fc:fcd.obtener()){
-                    System.out.println(fc.toString());
-                    for(Detallefactura detalle:fc.getDetallefacturas()){
-                        System.out.println("                  "+detalle.toString()+"\n");
-                    }
-            }
+//            for (Facturacliente fc:fcd.obtener()){
+//                    System.out.println(fc.toString());
+//                    for(Detallefactura detalle:fc.getDetallefacturas()){
+//                        System.out.println("                  "+detalle.toString()+"\n");
+//                    }
+//            }
        }
         
        
