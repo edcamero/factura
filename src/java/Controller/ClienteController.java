@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "ClienteController", urlPatterns = {"/ClienteController"})
 public class ClienteController extends HttpServlet {
 RequestDispatcher rd = null;
+ 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -50,16 +51,16 @@ RequestDispatcher rd = null;
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action= request.getParameter("action");
+        Gson gson=new Gson();
        
         Fachada fachada=Fachada.getInstancia();
         Cliente cliente;
         int  id;
+        PrintWriter out;
+        Cajero cajero=new Cajero(1, "enyerson", "camero ","123456");
         switch(action){
             case "agregar":
-                
-                  
-                    
-                    
+           
                     rd = request.getRequestDispatcher("/cliente_agr.jsp");
                      rd.forward(request, response);
              break;
@@ -86,9 +87,28 @@ RequestDispatcher rd = null;
                     rd.forward(request, response);
              break;
              
+              case "buscar":
+                   cliente=fachada.buscarCliente(request.getParameter("id").toString());
+                   response.setContentType("text/html;charset=UTF-8");
+                    out=response.getWriter();
+                    
+                        
+                   //ArrayList<Pelicula> pelis=PeliculaDao.listar(Integer.valueOf(request.getParameter("id")));
+                   if(cliente!=null){
+                  out.print(gson.toJson(cliente));
+                    }else{
+                   
+                   
+                   response.sendError( response.SC_NOT_FOUND, "Error a eliminar cliente.");
+                    
+                   }
+                    out.close();
+                  break;
+        }
+             
             
         }
-    }
+    
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -101,11 +121,12 @@ RequestDispatcher rd = null;
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Gson gson=new Gson();
         String action= request.getParameter("action");
         Fachada fachada=Fachada.getInstancia();
         PrintWriter out;
         Cliente cliente;
-        Gson gson=new Gson();
+        
         Cajero cajero=new Cajero(1, "enyerson", "camero ","123456");
         switch(action){
             case "agregar":

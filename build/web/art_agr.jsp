@@ -93,6 +93,7 @@
                     el: '#app',
                     data () {
                       return {
+                          
                         articulos:[],
                         articulo:{'artiId':0,'artiNombre':'','artiValorunitario':'','artiExistencia':''},
                         aux:{},

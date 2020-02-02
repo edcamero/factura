@@ -113,11 +113,7 @@ public class Cliente  implements java.io.Serializable {
         this.clieRegistradopor = clieRegistradopor;
     }
 
-    @Override
-    public String toString() {
-        return "Cliente{" + "clieId=" + clieId + ", clieDocumento=" + clieDocumento + ", clieNombre=" + clieNombre + ", clieApellido=" + clieApellido + ", clieDireccion=" + clieDireccion + ", clieTelefono=" + clieTelefono + ", clieEmail=" + clieEmail + '}';
-    }
-  
+   
 
 
 

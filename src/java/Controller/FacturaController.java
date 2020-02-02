@@ -6,6 +6,9 @@
 package Controller;
 
 import Logica.Fachada;
+import VO.Articulo;
+import VO.Cajero;
+import VO.Cliente;
 import VO.Facturacliente;
 import com.google.gson.Gson;
 import java.io.IOException;
@@ -17,6 +20,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -27,6 +31,9 @@ public class FacturaController extends HttpServlet {
     private RequestDispatcher rd = null;
     private Facturacliente factura;
     private int id;
+    HttpSession misession;
+    private Cliente cliente;
+    private Articulo articulo;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -55,7 +62,7 @@ public class FacturaController extends HttpServlet {
         String action= request.getParameter("action");
         PrintWriter out;
         Gson gson=new Gson();
-       
+        
         Fachada fachada=Fachada.getInstancia();
         
         int  id;
@@ -106,7 +113,52 @@ public class FacturaController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String action= request.getParameter("action");
+        PrintWriter out;
+        Gson gson=new Gson();
+        Fachada fachada=Fachada.getInstancia();
         
+        switch(action){
+            case "iniciar":
+                cliente=fachada.buscarCliente(Integer.parseInt(request.getParameter("id_cliente")));
+                factura=new Facturacliente(cliente);
+                misession= request.getSession(true);
+                misession.setAttribute("factura",factura);
+                 out=response.getWriter();
+                //ArrayList<Pelicula> pelis=PeliculaDao.listar(Integer.valueOf(request.getParameter("id")));
+                
+                out.print(gson.toJson(factura));
+                out.close();
+             
+             break;
+            case "agregar_detalle":
+                articulo=fachada.buscarArticulo(Integer.parseInt(request.getParameter("id_articulo")));
+                int cant=Integer.parseInt(request.getParameter("cantidad"));
+                misession= (HttpSession) request.getSession();
+                factura=(Facturacliente)misession.getAttribute("factura");
+                factura.AgregarArticulo(cant, articulo);
+                misession.setAttribute("factura",factura);
+                out=response.getWriter();
+                //ArrayList<Pelicula> pelis=PeliculaDao.listar(Integer.valueOf(request.getParameter("id")));
+                
+                out.print(gson.toJson(articulo));
+                out.close();
+             
+             break;
+             case "guardar":
+                Cajero cajero=new Cajero(1, "enyerson", "camero ","123456");
+                misession= (HttpSession) request.getSession();
+                factura=(Facturacliente)misession.getAttribute("factura");
+                if(fachada.agregarFactura(factura, cajero)){
+                    
+                    response.setStatus(202);
+                }else{
+                        response.sendError( response.SC_NOT_FOUND, "No se pudo crear ña factura");
+                }
+                 
+             
+             break;
+        }
     }
 
     /**

@@ -7,6 +7,7 @@ package Logica;
 
 import DAO.ArticuloDao;
 import DAO.ClienteDao;
+import DAO.FacturaclienteDao;
 import VO.Articulo;
 import VO.Cajero;
 import VO.Cliente;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
  */
 public class Mediador implements IMediador {
 ArticuloDao articuloDao;
+FacturaclienteDao facturaDao;
     public Mediador() {
     }
 
@@ -58,6 +60,11 @@ ArticuloDao articuloDao;
         ClienteDao clienteDao=new ClienteDao();
         return clienteDao.buscar(id);
     }
+    
+    public Cliente buscarCliente(String id) {
+        ClienteDao clienteDao=new ClienteDao();
+        return clienteDao.buscarPorCedula(id);
+    }
 
     
     
@@ -83,7 +90,8 @@ ArticuloDao articuloDao;
   
     @Override
     public Articulo buscarArticulo(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         ArticuloDao articuloDao=new ArticuloDao();
+         return articuloDao.buscar(id);
     }
 
     @Override
@@ -94,7 +102,8 @@ ArticuloDao articuloDao;
 
     @Override
     public boolean agregarFactura(Facturacliente factura, Cajero cajero) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       facturaDao=new FacturaclienteDao();
+       return facturaDao.registrar(factura, cajero);
     }
 
     @Override

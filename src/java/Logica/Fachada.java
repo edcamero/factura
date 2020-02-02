@@ -55,6 +55,10 @@ public class Fachada {
        return this.mediador.buscarCliente(id);
 //To change body of generated methods, choose Tools | Templates.
     }
+    public Cliente buscarCliente(String id) {
+       return this.mediador.buscarCliente(id);
+//To change body of generated methods, choose Tools | Templates.
+    }
 
    
     public boolean agregarArticulo(Articulo articulo, Cajero cajero) {
@@ -77,8 +81,7 @@ public class Fachada {
 
 
     public Articulo buscarArticulo(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+      return mediador.buscarArticulo(id); }
 
   
     public ArrayList<Articulo> listarArticulos() {
@@ -87,7 +90,7 @@ public class Fachada {
 
   
     public boolean agregarFactura(Facturacliente factura, Cajero cajero) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       return this.mediador.agregarFactura(factura, cajero);
     }
 
    

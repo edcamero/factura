@@ -51,10 +51,16 @@ public class ClienteDao implements InterfazDao<Cliente>{
                  cliente.setClieId(1);
                  
              }
-             con.cerrar();
+             
              return true;
          } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
              Logger.getLogger(ClienteDao.class.getName()).log(Level.SEVERE, null, ex);
+         }finally{
+             try {
+                 con.cerrar();
+             } catch (SQLException ex) {
+                 Logger.getLogger(ClienteDao.class.getName()).log(Level.SEVERE, null, ex);
+             }
          }
           return false;  
     }
@@ -79,10 +85,16 @@ public class ClienteDao implements InterfazDao<Cliente>{
                         //System.out.println(c.toString());
                         lista.add(c);
              }
-             con.cerrar();
+             
          } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
              Logger.getLogger(ClienteDao.class.getName()).log(Level.SEVERE, null, ex);
-         }
+         }finally{
+                try {
+                    con.cerrar();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ClienteDao.class.getName()).log(Level.SEVERE, null, ex);
+                }
+             }
          return lista;
     }
 
@@ -200,7 +212,7 @@ public class ClienteDao implements InterfazDao<Cliente>{
     
     
     
-    public Cliente buscarPorCedula(int id) {
+    public Cliente buscarPorCedula(String id) {
        
         
              con=Conexion.getConexion();
@@ -211,7 +223,7 @@ public class ClienteDao implements InterfazDao<Cliente>{
                     con.ConexionPostgres();
                     pst=con.getCon().prepareStatement(consulta,ResultSet.TYPE_SCROLL_SENSITIVE,
                             ResultSet.CONCUR_UPDATABLE);
-                    pst.setInt(1, id);
+                    pst.setString(1, id);
                     rs=pst.executeQuery();
 
                     while (rs.next()) {

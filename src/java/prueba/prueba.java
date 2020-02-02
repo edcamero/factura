@@ -11,8 +11,10 @@ import DAO.FacturaclienteDao;
 import Logica.Fachada;
 import VO.Articulo;
 import VO.Cajero;
+import VO.Cliente;
 import VO.Detallefactura;
 import VO.Facturacliente;
+import com.google.gson.Gson;
 
 /**
  *
@@ -26,12 +28,13 @@ public class prueba {
        ClienteDao cd=new ClienteDao();
        FacturaclienteDao fcd=new FacturaclienteDao();
        
+        Gson gson=new Gson();
        
        //Cliente cliente=new Cliente("1092343350","vanessa","sayago", "villa del rosario", "3123496942", "vanessasayago@hotmail.com");
       Articulo c=new Articulo("AZ carta",7000, 100);
        Cajero cajero=new Cajero(1, "enyerson", "camero ","123456");
-       c=Fachada.getInstancia().agregarArticulo2(c, cajero);
-        System.out.println(c.toString());
+       //c=Fachada.getInstancia().agregarArticulo2(c, cajero);
+//        System.out.println(c.toString());
 //        Articulo c=ad.buscar(9);
 //        c.setArtiExistencia(666);
 //        Fachada.getInstancia().editarArticulo(c, cajero);
@@ -39,10 +42,12 @@ public class prueba {
         
         //ad.actualizar(c, cajero);
 //      
-//       Cliente cliente=cd.buscar(1);
+       Cliente cliente=Fachada.getInstancia().buscarCliente("10909090");
+        System.out.println(cliente.toString());
 //       
-//       Facturacliente factura=new Facturacliente(cliente);
-//       factura.AgregarArticulo(5, c);
+       Facturacliente factura=new Facturacliente(cliente);
+        factura.AgregarArticulo(5, c);
+        System.out.println(gson.toJson(factura.toString()));
 //       fcd.registrar(factura, cajero);
        //cliente.setClieApellido("Sayago Martinez");
        //System.out.println(cd.buscar(3).getClieApellido());
