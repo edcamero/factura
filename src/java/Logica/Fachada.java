@@ -88,6 +88,10 @@ public class Fachada {
            return this.mediador.listarArticulos();
          }
 
+    
+    public String encriptar(String palabra){
+        return this.mediador.md5(palabra);
+    }
   
     public boolean agregarFactura(Facturacliente factura, Cajero cajero) {
        return this.mediador.agregarFactura(factura, cajero);

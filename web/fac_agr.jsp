@@ -319,10 +319,19 @@
             
             
                                guardarFactura:function(){
+                                 if(this.total>0){
                                   this.editable=false;
                                   
                                   axios.post('/factura/Controller?controller=Factura&action=guardar')
-                                    .then(response => (console.log(response.data)));
+                                    .then(response => (console.log(response.data)),
+                                    alert("se ha guardado la factura con un total de "+this.total),
+                                    location.href="/factura/Controller?controller=Factura&action=agregar"
+                                    );
+
+
+                                  }else{
+                                    alert("Seleccione algun articulo");
+                                  }
                            
                             
                                     

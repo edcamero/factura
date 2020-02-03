@@ -23,17 +23,17 @@
             <div class="row">
                   <div class="col form-group">
                     <label for="nombre"><strong>Nombre del Articulo</strong></label>
-                    <input v-model="articulo.artiNombre" type="text" class="form-control" name="nombre" id="nombre" aria-describedby="emailHelp" placeholder="Ingrese el nombre">
+                    <input v-model="articulo.artiNombre" type="text" class="form-control" onkeypress="return soloLetras(event)" name="nombre" id="nombre" aria-describedby="emailHelp" placeholder="Ingrese el nombre">
                     
                   </div>
                   <div class="col form-group">
                       <label for="valor"><strong>Valor a vender</strong></label>
-                      <input v-model="articulo.artiValorunitario" type="text" class="form-control" name="valor" id="valor" aria-describedby="emailHelp" placeholder="Ingrese el valor del articulo">
+                      <input v-model="articulo.artiValorunitario" type="text" class="form-control" onKeyPress="return soloNumeros(event)"  name="valor" id="valor" aria-describedby="emailHelp" placeholder="Ingrese el valor del articulo">
                       
                   </div>
                 <div class="col form-group">
                       <label for="existencia"><strong>Cantidad disponible</strong></label>
-                      <input v-model="articulo.artiExistencia" type="text" class="form-control" name="existencia" id="existencia" aria-describedby="emailHelp" placeholder="Ingrese la cantidad de existencia">
+                      <input v-model="articulo.artiExistencia" type="text" class="form-control" onKeyPress="return soloNumeros(event)" name="existencia" id="existencia" aria-describedby="emailHelp" placeholder="Ingrese la cantidad de existencia">
                       
                   </div>
                 <div class="col align-self-center">
@@ -108,11 +108,14 @@
                   
                   methods:{     
                                agregar: function () {
-                            
+                                    if(this.articulo.artiNombre!=''&&this.articulo.artiValorunitario!=''&&this.articulo.artiExistencia!=''){
                                      axios.post('/factura/Controller?controller=Articulo&action=agregar',this.createdFormData())
                                     .then(response => (this.aux=response.data,
                                                         this.articulos.push(this.aux),
                                                        this.articulo={'artiId':'','artiNombre':'','artiValorunitario':'','artiExistencia':''}))
+                                                   }else{
+                                                       alert("Llene todos los campos.")
+                                                   }
 
                               },
                               

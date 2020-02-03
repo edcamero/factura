@@ -25,12 +25,12 @@
             <div class="row">
                   <div class="col form-group">
                     <label for="nombre"><strong>Nombre del Cliente</strong></label>
-                    <input type="text" class="form-control" name="nombre" id="nombre" aria-describedby="emailHelp" placeholder="Ingrese el nombre">
+                    <input type="text" class="form-control" name="nombre" id="nombre" onkeypress="return soloLetras(event)" aria-describedby="emailHelp" placeholder="Ingrese el nombre">
                     
                   </div>
                   <div class="col form-group">
                       <label for="Apellido"><strong>Apellido del Cliente</strong></label>
-                      <input type="text" class="form-control" name="apellido" id="apellido" aria-describedby="emailHelp" placeholder="Ingrese el apellido">
+                      <input type="text" class="form-control" name="apellido" id="apellido" onkeypress="return soloLetras(event)"  aria-describedby="emailHelp" placeholder="Ingrese el apellido">
                       
                   </div>
              </div>

@@ -42,12 +42,12 @@ public class prueba {
         
         //ad.actualizar(c, cajero);
 //      
-       Cliente cliente=Fachada.getInstancia().buscarCliente("10909090");
-        System.out.println(cliente.toString());
+//       Cliente cliente=Fachada.getInstancia().buscarCliente("10909090");
+        System.out.println(Fachada.getInstancia().encriptar("123456"));
 //       
-       Facturacliente factura=new Facturacliente(cliente);
-        factura.AgregarArticulo(5, c);
-        System.out.println(gson.toJson(factura.toString()));
+//       Facturacliente factura=new Facturacliente(cliente);
+//        factura.AgregarArticulo(5, c);
+//        System.out.println(gson.toJson(factura.toString()));
 //       fcd.registrar(factura, cajero);
        //cliente.setClieApellido("Sayago Martinez");
        //System.out.println(cd.buscar(3).getClieApellido());
