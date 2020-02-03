@@ -120,15 +120,7 @@
 
 
               <div class="col-md-8 order-md-1 mb-8">
-                  <div class=" form-group row bg-dark my-2 py-2 text-center form-group">
-                   
-                     <div class="col-sm-8">
-                      <input type="text" id="buscarl" class="form-control" placeholder="Buscar articulo">
-                    </div>
-                    <div class="col-sm-3">
-                      <button type="button" name="" id="" class="btn btn-primary btn-sm btn-block">Buscar</button>
-                    </div>
-                  </div>
+                  
 
                   <div class="my-4">
                     <table class="table table-hover table-striped">
@@ -176,10 +168,15 @@
                     <span class="badge badge-secondary badge-pill">{{cant}}</span>
                   </h4>
                   <ul class="list-group mb-3">
-                    <li v-for="deta in detalles" class="list-group-item d-flex justify-content-between lh-condensed">
+                    <li v-for="(deta,index) in detalles" class="list-group-item d-flex justify-content-between lh-condensed">
                       <div>
+                        <button type="button" class="close" aria-label="Close" @click="eliminar(index)">
+                          <span aria-hidden="true"> &times;</span>
+                        </button>
                         <h6 class="my-0">{{deta.articulo.artiNombre}}</h6>
+                        
                         <small class="text-muted">(Costo de producto: $ {{deta.valor}} x {{deta.cantidad}} unidades)</small>
+                        
                       </div>
                       <span class="text-muted">$ {{deta.valorTotal}}</span>
                     </li>
@@ -348,11 +345,15 @@
                            
                            eliminar : function (index){
                                //this.articulo.artiNombre="";
-                               this.articulo=this.articulos[index];
-                               axios.post('/factura/Controller?controller=Articulo&action=eliminar',this.createdFormData())
-                                    .then(response => (aux=response.data,
-                                    this.articulos.splice( index, 1 )
-                                    ));
+                               const params = new URLSearchParams();
+                               params.append('index',index);
+                               axios.post('/factura/Controller?controller=Factura&action=eliminar_deta',params)
+                                    .then(response => (aux=response.data),
+                                    aux=this.detalles[index],
+                                   this.detalles.splice( index, 1 ),
+                                   this.cant=parseInt(this.cant, 10)-parseInt(aux.cantidad, 10),
+                                          this.total=parseInt(this.total)-parseInt(aux.valorTotal),
+                                    );
 
                                       },
                           

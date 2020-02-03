@@ -50,7 +50,7 @@ public class ArticuloDao implements InterfazDao<Articulo>{
                 articulo.setArtiId(rs.getInt(1));
                 
             }
-            con.cerrar();
+            
             return true;
             
             
@@ -58,7 +58,13 @@ public class ArticuloDao implements InterfazDao<Articulo>{
             
         } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
             Logger.getLogger(ArticuloDao.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }finally{
+                try {   
+                    con.cerrar();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ArticuloDao.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         return res;
     }
 

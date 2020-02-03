@@ -20,7 +20,7 @@ import java.util.ArrayList;
  */
 public class Mediador implements IMediador {
 ArticuloDao articuloDao;
-FacturaclienteDao facturaDao;
+private FacturaclienteDao facturaDao;
     public Mediador() {
     }
 
@@ -65,6 +65,10 @@ FacturaclienteDao facturaDao;
         ClienteDao clienteDao=new ClienteDao();
         return clienteDao.buscarPorCedula(id);
     }
+    public Facturacliente buscarFactura(int id) {
+        facturaDao=new FacturaclienteDao();
+        return  facturaDao.buscar(id);
+    }
 
     
     
@@ -108,7 +112,8 @@ FacturaclienteDao facturaDao;
 
     @Override
     public ArrayList<Facturacliente> listarFacturas() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       facturaDao=new FacturaclienteDao();
+       return facturaDao.obtener();
     }
 
     

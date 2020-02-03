@@ -9,6 +9,7 @@ import Logica.Fachada;
 import VO.Articulo;
 import VO.Cajero;
 import VO.Cliente;
+import VO.Detallefactura;
 import VO.Facturacliente;
 import com.google.gson.Gson;
 import java.io.IOException;
@@ -68,7 +69,7 @@ public class FacturaController extends HttpServlet {
         int  id;
         switch(action){
             case "agregar":
-                                 
+                                   
                     rd = request.getRequestDispatcher("/fac_agr.jsp");
                      rd.forward(request, response);
              break;
@@ -76,17 +77,17 @@ public class FacturaController extends HttpServlet {
              case "listar":
                     
                     ArrayList<Facturacliente> lista=fachada.listarFacturas();
-                    response.setContentType("text/html;charset=UTF-8");
-                    out=response.getWriter();
-                //ArrayList<Pelicula> pelis=PeliculaDao.listar(Integer.valueOf(request.getParameter("id")));
-                
-                out.print(gson.toJson(lista));
-                out.close();
+                    request.setAttribute("facturas", lista);
+                    rd = request.getRequestDispatcher("/fac_lis.jsp");
+                    rd.forward(request, response);
+                    
              break;
              
              
              case "ver":
-                                 
+                    id=Integer.parseInt(request.getParameter("id"));
+                    factura=fachada.buscarFactura(id);
+                    request.getSession().setAttribute("factura", factura);
                     rd = request.getRequestDispatcher("/fac_res.jsp");
                      rd.forward(request, response);
              break;
@@ -138,11 +139,25 @@ public class FacturaController extends HttpServlet {
                 out.close();
              
              break;
+            case "eliminar_deta":
+                int  index=Integer.parseInt(request.getParameter("index"));
+                misession= (HttpSession) request.getSession();
+                factura=(Facturacliente)misession.getAttribute("factura");
+                Detallefactura detalle=factura.getDetallefacturas().remove(0);
+                misession.setAttribute("factura",factura);
+                out=response.getWriter();
+                //ArrayList<Pelicula> pelis=PeliculaDao.listar(Integer.valueOf(request.getParameter("id")));
+                
+                out.print(gson.toJson(detalle.getArticulo()));
+                out.close();
+             
+             break;
              case "guardar":
                 Cajero cajero=new Cajero(1, "enyerson", "camero ","123456");
                 misession= (HttpSession) request.getSession();
                 factura=(Facturacliente)misession.getAttribute("factura");
                 if(fachada.agregarFactura(factura, cajero)){
+                    
                     request.getSession().setAttribute("factura", factura);
                     // rd = request.getRequestDispatcher("/fac_res.jsp");
                     // rd.forward(request, response);

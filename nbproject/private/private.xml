@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/Users/blade/OneDrive/Documentos/NetBeansProjects/factura/nbproject/build-impl.xml</file>
+            <file>file:/C:/Users/blade/OneDrive/Documentos/NetBeansProjects/factura/web/fac_res.jsp</file>
+            <file>file:/C:/Users/blade/OneDrive/Documentos/NetBeansProjects/factura/web/art_agr.jsp</file>
+            <file>file:/C:/Users/blade/OneDrive/Documentos/NetBeansProjects/factura/src/java/VO/Facturacliente.java</file>
+            <file>file:/C:/Users/blade/OneDrive/Documentos/NetBeansProjects/factura/src/java/DAO/FacturaclienteDao.java</file>
+            <file>file:/C:/Users/blade/OneDrive/Documentos/NetBeansProjects/factura/web/header.jsp</file>
+            <file>file:/C:/Users/blade/OneDrive/Documentos/NetBeansProjects/factura/src/java/VO/Detallefactura.java</file>
+            <file>file:/C:/Users/blade/OneDrive/Documentos/NetBeansProjects/factura/web/fac_lis.jsp</file>
+            <file>file:/C:/Users/blade/OneDrive/Documentos/NetBeansProjects/factura/src/java/Logica/Fachada.java</file>
+            <file>file:/C:/Users/blade/OneDrive/Documentos/NetBeansProjects/factura/src/java/Logica/Mediador.java</file>
+            <file>file:/C:/Users/blade/OneDrive/Documentos/NetBeansProjects/factura/web/fac_agr.jsp</file>
+            <file>file:/C:/Users/blade/OneDrive/Documentos/NetBeansProjects/factura/src/java/Controller/FacturaController.java</file>
+        </group>
+    </open-files>
+</project-private>

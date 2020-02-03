@@ -85,7 +85,7 @@ public class DetallefacturaDao implements InterfazDao<Detallefactura> {
     
     public void obtener(Facturacliente factura) throws SQLException {
             ArticuloDao ad=new ArticuloDao();
-            Set<Detallefactura> lista=new HashSet<Detallefactura>();
+            ArrayList<Detallefactura> lista=new ArrayList();
              con=Conexion.getConexion();
              String consulta="select * FROM facturacion.detallefactura where facl_id=?;";
              

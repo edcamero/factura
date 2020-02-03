@@ -99,6 +99,10 @@ public class Fachada {
 
    
     public ArrayList<Facturacliente> listarFacturas() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            return this.mediador.listarFacturas();
+    }
+    
+    public Facturacliente buscarFactura(int id){
+        return this.mediador.buscarFactura(id);
     }
 }
