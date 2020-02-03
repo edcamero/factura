@@ -155,10 +155,16 @@ public class Conexion{
             conta++;
            }  
           sentencia.close();
-      } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
+      } catch (SQLException ex) {
           Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
       
-       }
+       }    catch (ClassNotFoundException ex) {
+                Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InstantiationException ex) {
+                Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalAccessException ex) {
+                Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
+            }
       return modelo;    
    }
   

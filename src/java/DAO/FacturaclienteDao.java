@@ -14,7 +14,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -52,9 +51,14 @@ public class FacturaclienteDao implements InterfazDao<Facturacliente>{
                  factura.setFaclId(rs.getInt(1));
                  
              }
-             for (Iterator<Detallefactura> it = factura.getDetallefacturas().iterator(); it.hasNext();) {
-                Detallefactura a = it.next();
-                dd.registrar(a, cajero);
+//             for (Iterator<Detallefactura> it = factura.getDetallefacturas().iterator(); it.hasNext();) {
+//                Detallefactura a = it.next();
+//                dd.registrar(a, cajero);
+//            }
+
+
+            for(Detallefactura df:factura.getDetallefacturas()){
+                dd.registrar(df, cajero);
             }
              
              con.getCon().commit();

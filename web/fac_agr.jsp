@@ -104,9 +104,6 @@
 
             
         </div>  
-                <div>
-                  <button type="submit" class="btn btn-primary btn-lg btn-block">Enviar</button>
-                </div>
                 
         
             </div>
@@ -323,9 +320,10 @@
                                   this.editable=false;
                                   
                                   axios.post('/factura/Controller?controller=Factura&action=guardar')
-                                    .then(response => (console.log(response.data)),
-                                    alert("se ha guardado la factura con un total de "+this.total),
-                                    location.href="/factura/Controller?controller=Factura&action=agregar"
+                                    .then(response => (console.log(response.data),
+                                    location.href="/factura/Controller?controller=Factura&action=ver"),
+                                    
+                                    
                                     );
 
 

@@ -27,7 +27,7 @@ public class Facturacliente  implements java.io.Serializable {
     public Facturacliente(Cliente cliente) {
         this.cliente = cliente;
         this.faclTotal=0;
-        this.detallefacturas=new ArrayList<Detallefactura>();
+        this.detallefacturas=new ArrayList();
         this.faclFecha=  new Date();
         this.faclFechacambio=new Date();
     }
@@ -45,7 +45,7 @@ public class Facturacliente  implements java.io.Serializable {
         this.faclFecha = faclFecha;
         this.faclFechacambio = faclFechacambio;
         this.faclRegistradopor = faclRegistradopor;
-        this.detallefacturas=new ArrayList<Detallefactura>(0);
+        this.detallefacturas=new ArrayList();
     }
 
 	

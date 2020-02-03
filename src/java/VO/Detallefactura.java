@@ -26,6 +26,7 @@ public class Detallefactura  implements java.io.Serializable {
         this.articulo = articulo;
         this.facturacliente = facturacliente;
         this.defaCantidad = defaCantidad;
+        this.defaValorunitario=articulo.getArtiValorunitario();
     }
 
     public Detallefactura(int defaId, Articulo articulo, Facturacliente facturacliente, int defaCantidad, int defaValorunitario, Date defaFechacambio, String defaRegistardopor) {

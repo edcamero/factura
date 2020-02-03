@@ -85,17 +85,10 @@ public class FacturaController extends HttpServlet {
              break;
              
              
-              case "editar":
-                  id=Integer.parseInt(request.getParameter("id"));
-                    //articulo=fachada.buscarArticulo(id);
-                    //factura=fachad
-                    
-                   // request.setAttribute("articulo", articulo);
-                    //HttpSession session = request.getSession(true);
-                    
-                    rd = request.getRequestDispatcher("/art_edi.jsp");
-                    
-                    rd.forward(request, response);
+             case "ver":
+                                 
+                    rd = request.getRequestDispatcher("/fac_res.jsp");
+                     rd.forward(request, response);
              break;
              
             
@@ -150,8 +143,10 @@ public class FacturaController extends HttpServlet {
                 misession= (HttpSession) request.getSession();
                 factura=(Facturacliente)misession.getAttribute("factura");
                 if(fachada.agregarFactura(factura, cajero)){
-                    
-                    response.setStatus(202);
+                    request.getSession().setAttribute("factura", factura);
+                    // rd = request.getRequestDispatcher("/fac_res.jsp");
+                    // rd.forward(request, response);
+                     response.setStatus(202);
                 }else{
                         response.sendError( response.SC_NOT_FOUND, "No se pudo crear ña factura");
                 }
