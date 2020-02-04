@@ -18,6 +18,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -52,12 +53,12 @@ RequestDispatcher rd = null;
             throws ServletException, IOException {
         String action= request.getParameter("action");
         Gson gson=new Gson();
-       
+       HttpSession sesion = (HttpSession)request.getSession(false);
         Fachada fachada=Fachada.getInstancia();
         Cliente cliente;
         int  id;
         PrintWriter out;
-        Cajero cajero=new Cajero(1, "enyerson", "camero ","123456");
+        Cajero cajero=(Cajero)sesion.getAttribute("cajero");
         switch(action){
             case "agregar":
            
@@ -127,7 +128,8 @@ RequestDispatcher rd = null;
         PrintWriter out;
         Cliente cliente;
         
-        Cajero cajero=new Cajero(1, "enyerson", "camero ","123456");
+        HttpSession sesion = (HttpSession)request.getSession(false);
+        Cajero cajero=(Cajero)sesion.getAttribute("cajero");
         switch(action){
             case "agregar":
                 

@@ -159,7 +159,9 @@ public class FacturaController extends HttpServlet {
              
              break;
              case "guardar":
-                Cajero cajero=new Cajero(1, "enyerson", "camero ","123456");
+                 
+                HttpSession sesion = (HttpSession)request.getSession(false);
+                Cajero cajero=(Cajero)sesion.getAttribute("cajero");
                 misession= (HttpSession) request.getSession();
                 factura=(Facturacliente)misession.getAttribute("factura");
                 if(fachada.agregarFactura(factura, cajero)){

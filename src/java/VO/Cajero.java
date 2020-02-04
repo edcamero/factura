@@ -12,6 +12,7 @@ public class Cajero  implements java.io.Serializable {
 
 
      private int cajeId;
+     private String username;
      private String cajeNombre;
      private String cajeApellido;
      private String cajePassword;
@@ -21,21 +22,26 @@ public class Cajero  implements java.io.Serializable {
     public Cajero() {
     }
 
-	
     public Cajero(int cajeId, String cajeNombre, String cajeApellido, String cajePassword) {
         this.cajeId = cajeId;
         this.cajeNombre = cajeNombre;
         this.cajeApellido = cajeApellido;
         this.cajePassword = cajePassword;
     }
-    public Cajero(int cajeId, String cajeNombre, String cajeApellido, String cajePassword, Date cajeFechacambio, String cajeRegistradopor) {
-       this.cajeId = cajeId;
-       this.cajeNombre = cajeNombre;
-       this.cajeApellido = cajeApellido;
-       this.cajePassword = cajePassword;
-       this.cajeFechacambio = cajeFechacambio;
-       this.cajeRegistradopor = cajeRegistradopor;
+
+    public Cajero(int cajeId, String username, String cajeNombre, String cajeApellido, String cajePassword, Date cajeFechacambio, String cajeRegistradopor) {
+        this.cajeId = cajeId;
+        this.username = username;
+        this.cajeNombre = cajeNombre;
+        this.cajeApellido = cajeApellido;
+        this.cajePassword = cajePassword;
+        this.cajeFechacambio = cajeFechacambio;
+        this.cajeRegistradopor = cajeRegistradopor;
     }
+
+	
+    
+    
    
     public int getCajeId() {
         return this.cajeId;

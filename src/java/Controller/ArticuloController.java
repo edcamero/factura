@@ -18,6 +18,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -105,7 +106,7 @@ public class ArticuloController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        HttpSession sesion = (HttpSession)request.getSession(false);
         String action= request.getParameter("action");
         String nombre="";
         Fachada fachada=Fachada.getInstancia();
@@ -114,7 +115,8 @@ public class ArticuloController extends HttpServlet {
         int exist, id;
         Gson gson=new Gson();
         
-        Cajero cajero=new Cajero(1, "enyerson", "camero ","123456");
+        //Cajero cajero=new Cajero(1, "enyerson", "camero ","123456");
+        Cajero cajero=(Cajero)sesion.getAttribute("cajero");
         switch(action){
             case "agregar":
                 //   BufferedReader reader = request.getReader(); //Se toma la fuente de datos de la solicitud
