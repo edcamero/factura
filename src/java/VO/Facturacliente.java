@@ -107,6 +107,12 @@ public class Facturacliente  implements java.io.Serializable {
         this.detallefacturas.add(new Detallefactura(articulo, this,cant));
         this.faclTotal=this.faclTotal+(cant*articulo.getArtiValorunitario());
     }
+    
+    public Detallefactura eliminarArticulo(int index){
+        Detallefactura detalle=this.detallefacturas.remove(index);
+        this.faclTotal=this.faclTotal-(detalle.getDefaCantidad()*detalle.getArticulo().getArtiValorunitario());
+        return detalle;
+    }
 
     @Override
     public String toString() {

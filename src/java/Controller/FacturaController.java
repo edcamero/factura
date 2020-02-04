@@ -69,15 +69,17 @@ public class FacturaController extends HttpServlet {
         int  id;
         switch(action){
             case "agregar":
-                                   
+                               
                     rd = request.getRequestDispatcher("/fac_agr.jsp");
                      rd.forward(request, response);
              break;
              
              case "listar":
-                    
-                    ArrayList<Facturacliente> lista=fachada.listarFacturas();
+                    int page= Integer.parseInt(request.getParameter("page"));  
+                    ArrayList<Facturacliente> lista=fachada.listarFacturas(page);
                     request.setAttribute("facturas", lista);
+                    request.setAttribute("page", page);
+                    //request.setAttribute("next", page+1);
                     rd = request.getRequestDispatcher("/fac_lis.jsp");
                     rd.forward(request, response);
                     
@@ -85,8 +87,12 @@ public class FacturaController extends HttpServlet {
              
              
              case "ver":
+                 try{
                     id=Integer.parseInt(request.getParameter("id"));
                     factura=fachada.buscarFactura(id);
+                 }catch( NumberFormatException e){
+                     
+                 }
                     request.getSession().setAttribute("factura", factura);
                     rd = request.getRequestDispatcher("/fac_res.jsp");
                      rd.forward(request, response);
@@ -143,7 +149,7 @@ public class FacturaController extends HttpServlet {
                 int  index=Integer.parseInt(request.getParameter("index"));
                 misession= (HttpSession) request.getSession();
                 factura=(Facturacliente)misession.getAttribute("factura");
-                Detallefactura detalle=factura.getDetallefacturas().remove(0);
+                Detallefactura detalle=factura.eliminarArticulo(index);
                 misession.setAttribute("factura",factura);
                 out=response.getWriter();
                 //ArrayList<Pelicula> pelis=PeliculaDao.listar(Integer.valueOf(request.getParameter("id")));
@@ -163,7 +169,7 @@ public class FacturaController extends HttpServlet {
                     // rd.forward(request, response);
                      response.setStatus(202);
                 }else{
-                        response.sendError( response.SC_NOT_FOUND, "No se pudo crear ña factura");
+                        response.sendError( response.SC_NOT_FOUND, "No se pudo crear la factura");
                 }
                  
              

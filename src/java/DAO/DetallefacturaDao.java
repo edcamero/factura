@@ -30,6 +30,7 @@ public class DetallefacturaDao implements InterfazDao<Detallefactura> {
 
     public DetallefacturaDao(Conexion con) {
         this.con = con;
+        this.ad=new ArticuloDao();
     }
     public DetallefacturaDao() {
         this.con = Conexion.getConexion();
@@ -73,11 +74,6 @@ public class DetallefacturaDao implements InterfazDao<Detallefactura> {
                 Logger.getLogger(DetallefacturaDao.class.getName()).log(Level.SEVERE, null, ex1);
             }
         }finally{
-            try {
-                con.cerrar();
-            } catch (SQLException ex) {
-                Logger.getLogger(DetallefacturaDao.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
             
             
@@ -108,7 +104,7 @@ public class DetallefacturaDao implements InterfazDao<Detallefactura> {
 
                     while (rs.next()) {
                         //Cliente(int clieId, String clieDocumento, String clieNombre, String clieApellido, String clieDireccion, String clieTelefono, String clieEmail, Date clieFechacambio, String clieRegistradopor) {
-                         articulo=ad.buscar(rs.getInt(2));
+                         articulo=ad.buscar(3);
                           detalle=new Detallefactura(rs.getInt(1), articulo, factura, rs.getInt(4),rs.getInt(5), rs.getDate(6), rs.getString(7));
                          factura.getDetallefacturas().add(detalle);
                         //Cliente c=new Cliente(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getDate(8),rs.getString(9));

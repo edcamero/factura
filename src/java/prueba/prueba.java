@@ -43,8 +43,12 @@ public class prueba {
         //ad.actualizar(c, cajero);
 //      
 //       Cliente cliente=Fachada.getInstancia().buscarCliente("10909090");
-        System.out.println(Fachada.getInstancia().listarFacturas());
-//       
+        //System.out.println(Fachada.getInstancia().buscarCliente(1));
+        Facturacliente factura =new Facturacliente(Fachada.getInstancia().buscarCliente(1));
+       
+        factura.AgregarArticulo(2, c);
+        System.out.println(factura);
+        Fachada.getInstancia().agregarFactura(factura, cajero);
 //       Facturacliente factura=new Facturacliente(cliente);
 //        factura.AgregarArticulo(5, c);
 //        System.out.println(gson.toJson(factura.toString()));

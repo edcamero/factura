@@ -94,7 +94,49 @@ public class FacturaclienteDao implements InterfazDao<Facturacliente>{
             ArrayList<Facturacliente> lista=new ArrayList();
              con=Conexion.getConexion();
              DetallefacturaDao detalleDao=new DetallefacturaDao();
-             String consulta="select * FROM facturacion.facturacliente ORDER BY facl_id ;";
+             String consulta="select * FROM facturacion.facturacliente ORDER BY facl_id  DESC;";
+             
+             try {
+            
+                    con.ConexionPostgres();
+                    pst=con.getCon().prepareStatement(consulta);
+                    rs=pst.executeQuery();
+                    
+                    while (rs.next()) {
+                        Cliente cliente=clienteDao.buscar(rs.getInt(2));
+                         //Cliente c=new Cliente(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getDate(8),rs.getString(9));
+                        //System.out.println(c.toString());
+                        Facturacliente fc=new Facturacliente(rs.getInt(1), cliente,rs.getInt(3),rs.getDate(4),rs.getDate(5),rs.getString(6));
+                        //fc.setDetallefacturas(detallefacturas);
+                        detalleDao.obtener(fc);
+                        lista.add(fc);
+             }
+             
+         } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
+             Logger.getLogger(ClienteDao.class.getName()).log(Level.SEVERE, null, ex);
+         }finally{
+                try {
+                    con.cerrar();
+                } catch (SQLException ex) {
+                    Logger.getLogger(FacturaclienteDao.class.getName()).log(Level.SEVERE, null, ex);
+                }
+             }
+         return lista;
+       
+    
+    }
+
+    
+    
+    
+      public ArrayList<Facturacliente> obtener(int page) {
+         ClienteDao clienteDao=new ClienteDao();
+         
+        
+            ArrayList<Facturacliente> lista=new ArrayList();
+             con=Conexion.getConexion();
+             DetallefacturaDao detalleDao=new DetallefacturaDao();
+             String consulta="select * FROM facturacion.facturacliente ORDER BY facl_id  DESC LIMIT 10 OFFSET "+page+";";
              
              try {
             

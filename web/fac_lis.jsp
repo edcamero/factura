@@ -10,6 +10,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%ArrayList<Facturacliente> facturas=(ArrayList<Facturacliente> )(request.getAttribute("facturas"));%>
+<%Integer pagina=Integer.parseInt(request.getAttribute("page").toString());%>
+
 <!DOCTYPE html>
 <html>
     <jsp:include page="head.jsp" flush="true" />
@@ -26,8 +28,18 @@
       
               <div class="col-12">
                 <div class="card">
-                  <div class="card-header">
-                    <h4 class="card-title">Detalle de la compra</h4>
+                  <div class="card-header container-luid">
+                      <div class="row justify-content-between">
+                           <div col-4>
+                                <h4 class="card-title">Detalle de la compra</h4>
+                            </div>
+                          <div class="btn-group col-4" role="group" aria-label="Basic example">
+                              <%if(pagina!=0){%>
+                              <button type="button" class="btn btn-primary btn-sm" onclick="window.location.href='Controller?controller=Factura&action=listar&page=<%=pagina-1%>'" >Atras</button>
+                               <%}%>
+                            <button type="button" class="btn btn-primary btn-sm" onclick="window.location.href='Controller?controller=Factura&action=listar&page=<%=pagina+1%>'">Adelante</button>
+                          </div>
+                        </div>
                   </div>
                   <div class="card-body">
                     <table class="table table-hover table-striped table-bordered">

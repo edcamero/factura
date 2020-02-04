@@ -117,6 +117,11 @@ private FacturaclienteDao facturaDao;
     }
 
     
+     public ArrayList<Facturacliente> listarFacturas(int page) {
+       facturaDao=new FacturaclienteDao();
+       return facturaDao.obtener(page*10);
+    }
+    
     @Override
     public boolean editarArticulo(Articulo articulo, Cajero cajero) {
         articuloDao=new ArticuloDao();

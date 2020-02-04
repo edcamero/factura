@@ -102,6 +102,10 @@ public class Fachada {
             return this.mediador.listarFacturas();
     }
     
+    public ArrayList<Facturacliente> listarFacturas(int page) {
+            return this.mediador.listarFacturas(page);
+    }
+    
     public Facturacliente buscarFactura(int id){
         return this.mediador.buscarFactura(id);
     }
