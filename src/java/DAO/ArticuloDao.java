@@ -170,15 +170,14 @@ public class ArticuloDao implements InterfazDao<Articulo>{
     @Override
     public Articulo buscar(int id) {
         
-        
+        c=null;
       
         con=Conexion.getConexion();
         String consulta="select * FROM facturacion.articulo where arti_id=?;";
         
         try {
             con.ConexionPostgres();
-            pst=con.getCon().prepareStatement(consulta,ResultSet.TYPE_SCROLL_SENSITIVE, 
-                ResultSet.CONCUR_UPDATABLE);
+            pst=con.getCon().prepareStatement(consulta);
             pst.setInt(1, id);
             
             rs=pst.executeQuery();
@@ -191,7 +190,7 @@ public class ArticuloDao implements InterfazDao<Articulo>{
                 
             }
              
-            return c;
+            
             
         
         } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
@@ -203,7 +202,7 @@ public class ArticuloDao implements InterfazDao<Articulo>{
                 Logger.getLogger(ArticuloDao.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-    return null;
+    return c;
     }
 
  

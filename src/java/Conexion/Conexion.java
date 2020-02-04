@@ -22,10 +22,10 @@ public class Conexion{
 	}
         
         public static Conexion getConexion(){
-            if(conexion==null){
-                conexion=new Conexion();
-            }
-            return conexion;
+//            if(conexion==null){
+//                conexion=new Conexion();
+//            }
+            return new Conexion();
         }
 	public Conexion(String iP,String puerto,String nombreBD,String usuario,String password){
 		this.usuario = usuario;
@@ -176,8 +176,8 @@ public class Conexion{
 	}
 
 	public void cerrar() throws SQLException{
-		con.close();
-		sentencia.close();
+		this.con.close();
+		this.sentencia.close();
 	}
 
     public Connection getCon() {

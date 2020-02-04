@@ -177,7 +177,7 @@ public class ClienteDao implements InterfazDao<Cliente>{
 
     @Override
     public Cliente buscar(int id) {
-       
+          Cliente cliente=null;
         
              con=Conexion.getConexion();
              String consulta="select * FROM facturacion.cliente where clie_id=?;";
@@ -185,16 +185,16 @@ public class ClienteDao implements InterfazDao<Cliente>{
              try {
             
                     con.ConexionPostgres();
-                    pst=con.getCon().prepareStatement(consulta,ResultSet.TYPE_SCROLL_SENSITIVE,
-                            ResultSet.CONCUR_UPDATABLE);
+                    pst=con.getCon().prepareStatement(consulta);
                     pst.setInt(1, id);
                     rs=pst.executeQuery();
 
                     while (rs.next()) {
                         //Cliente(int clieId, String clieDocumento, String clieNombre, String clieApellido, String clieDireccion, String clieTelefono, String clieEmail, Date clieFechacambio, String clieRegistradopor) {
         
-                         return new Cliente(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getDate(8),rs.getString(9));
+                         cliente= new Cliente(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getDate(8),rs.getString(9));
                         //System.out.println(c.toString());
+                        break;
                         
              }
              
@@ -207,7 +207,7 @@ public class ClienteDao implements InterfazDao<Cliente>{
                      Logger.getLogger(ClienteDao.class.getName()).log(Level.SEVERE, null, ex);
                  }
              }
-         return  null;
+         return  cliente;
     }
     
     

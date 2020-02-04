@@ -43,7 +43,7 @@ public class prueba {
         //ad.actualizar(c, cajero);
 //      
 //       Cliente cliente=Fachada.getInstancia().buscarCliente("10909090");
-        System.out.println(Fachada.getInstancia().buscarFactura(3));
+        System.out.println(Fachada.getInstancia().listarFacturas());
 //       
 //       Facturacliente factura=new Facturacliente(cliente);
 //        factura.AgregarArticulo(5, c);

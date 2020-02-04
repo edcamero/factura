@@ -19,7 +19,7 @@ public class Facturacliente  implements java.io.Serializable {
      private Date faclFecha;
      private Date faclFechacambio;
      private String faclRegistradopor;
-     private List<Detallefactura> detallefacturas;
+     private ArrayList<Detallefactura> detallefacturas;
 
     public Facturacliente() {
     }
