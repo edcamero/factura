@@ -4,25 +4,26 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/blade/OneDrive/Documentos/NetBeansProjects/factura/web/fac_res.jsp</file>
-            <file>file:/C:/Users/blade/OneDrive/Documentos/NetBeansProjects/factura/web/art_agr.jsp</file>
+            <file>file:/C:/Users/blade/OneDrive/Documentos/NetBeansProjects/factura/web/cliente_edi.jsp</file>
             <file>file:/C:/Users/blade/OneDrive/Documentos/NetBeansProjects/factura/web/header.jsp</file>
-            <file>file:/C:/Users/blade/OneDrive/Documentos/NetBeansProjects/factura/web/css/login.css</file>
+            <file>file:/C:/Users/blade/OneDrive/Documentos/NetBeansProjects/factura/web/cliente_agr.jsp</file>
             <file>file:/C:/Users/blade/OneDrive/Documentos/NetBeansProjects/factura/src/java/DAO/DetallefacturaDao.java</file>
             <file>file:/C:/Users/blade/OneDrive/Documentos/NetBeansProjects/factura/src/java/Conexion/Conexion.java</file>
             <file>file:/C:/Users/blade/OneDrive/Documentos/NetBeansProjects/factura/src/java/Logica/Mediador.java</file>
             <file>file:/C:/Users/blade/OneDrive/Documentos/NetBeansProjects/factura/web/fac_agr.jsp</file>
             <file>file:/C:/Users/blade/OneDrive/Documentos/NetBeansProjects/factura/src/java/Controller/FacturaController.java</file>
             <file>file:/C:/Users/blade/OneDrive/Documentos/NetBeansProjects/factura/src/java/Controller/ArticuloController.java</file>
-            <file>file:/C:/Users/blade/OneDrive/Documentos/NetBeansProjects/factura/nbproject/build-impl.xml</file>
+            <file>file:/C:/Users/blade/OneDrive/Documentos/NetBeansProjects/factura/src/java/Controller/ClienteController.java</file>
             <file>file:/C:/Users/blade/OneDrive/Documentos/NetBeansProjects/factura/src/java/VO/Facturacliente.java</file>
             <file>file:/C:/Users/blade/OneDrive/Documentos/NetBeansProjects/factura/src/java/DAO/FacturaclienteDao.java</file>
             <file>file:/C:/Users/blade/OneDrive/Documentos/NetBeansProjects/factura/src/java/DAO/ArticuloDao.java</file>
             <file>file:/C:/Users/blade/OneDrive/Documentos/NetBeansProjects/factura/src/java/VO/Detallefactura.java</file>
             <file>file:/C:/Users/blade/OneDrive/Documentos/NetBeansProjects/factura/src/java/prueba/prueba.java</file>
             <file>file:/C:/Users/blade/OneDrive/Documentos/NetBeansProjects/factura/web/fac_lis.jsp</file>
-            <file>file:/C:/Users/blade/OneDrive/Documentos/NetBeansProjects/factura/web/login.jsp</file>
             <file>file:/C:/Users/blade/OneDrive/Documentos/NetBeansProjects/factura/src/java/Logica/Fachada.java</file>
             <file>file:/C:/Users/blade/OneDrive/Documentos/NetBeansProjects/factura/web/head.jsp</file>
+            <file>file:/C:/Users/blade/OneDrive/Documentos/NetBeansProjects/factura/src/java/DAO/CajeroDao.java</file>
+            <file>file:/C:/Users/blade/OneDrive/Documentos/NetBeansProjects/factura/web/index.jsp</file>
         </group>
     </open-files>
 </project-private>

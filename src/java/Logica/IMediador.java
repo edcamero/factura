@@ -8,7 +8,7 @@ package Logica;
 import VO.Articulo;
 import VO.Cajero;
 import VO.Cliente;
-import VO.Facturacliente;
+import VO.FacturaCliente;
 import java.util.ArrayList;
 
 /**
@@ -32,8 +32,8 @@ public interface IMediador {
    public ArrayList<Articulo> listarArticulos();
    
    
-   public boolean agregarFactura(Facturacliente factura,Cajero cajero);
-    public ArrayList<Facturacliente> listarFacturas();
+   public boolean agregarFactura(FacturaCliente factura,Cajero cajero);
+    public ArrayList<FacturaCliente> listarFacturas();
    
     
 }

@@ -5,14 +5,20 @@
  */
 package Logica;
 
+import Conexion.Conexion;
 import DAO.ArticuloDao;
 import DAO.ClienteDao;
+import DAO.DetallefacturaDao;
 import DAO.FacturaclienteDao;
 import VO.Articulo;
 import VO.Cajero;
 import VO.Cliente;
-import VO.Facturacliente;
+import VO.DetalleFactura;
+import VO.FacturaCliente;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -20,54 +26,191 @@ import java.util.ArrayList;
  */
 public class Mediador implements IMediador {
 ArticuloDao articuloDao;
-private FacturaclienteDao facturaDao;
+private final  Conexion con;
+private final ClienteDao clienteDao;
+private final FacturaclienteDao facturaDao;
+private final DetallefacturaDao detalleDao;
     public Mediador() {
+        this.con=Conexion.getConexion();
+        clienteDao=new ClienteDao(this.con);
+        articuloDao=new ArticuloDao(this.con);
+        facturaDao=new FacturaclienteDao(this.con);
+        detalleDao=new DetallefacturaDao(this.con);
     }
 
     
     
     @Override
     public boolean agregarCliente(Cliente cliente, Cajero cajero) {
-       ClienteDao clienteDao=new ClienteDao();
-       return clienteDao.registrar(cliente, cajero);
+        boolean respuesta=false;
+    try {
+        con.ConexionPostgres();
+        respuesta=clienteDao.registrar(cliente, cajero);
+    } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
+        Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+    }finally{
+        if(con.getCon()!=null){
+            try {
+                con.cerrar();
+            } catch (SQLException ex) {
+                Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+        return respuesta;
     }
 
     @Override
     public boolean editarCliente(Cliente cliente, Cajero cajero) {
-       ClienteDao clienteDao=new ClienteDao();
-       return clienteDao.actualizar(cliente, cajero);
+        boolean respuesta=false;
+    try {
+        con.ConexionPostgres();
+        respuesta= clienteDao.actualizar(cliente, cajero);
+    } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
+        Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+    }finally{
+        if(con.getCon()!=null){
+            try {
+                con.cerrar();
+            } catch (SQLException ex) {
+                Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    return respuesta;
     }
 
     
     @Override
     public boolean eliminarCliente(Cliente cliente, Cajero cajero) {
-     ClienteDao clienteDao=new ClienteDao();
-       return clienteDao.eliminar(cliente.getClieId(), cajero);
+        boolean respuesta=false;
+    try {
+        
+        con.ConexionPostgres();
+        respuesta= clienteDao.eliminar(cliente.getClieId(), cajero);
+    } catch (ClassNotFoundException ex) {
+        Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (SQLException ex) {
+        Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (InstantiationException ex) {
+        Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (IllegalAccessException ex) {
+        Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+    }finally{
+        if(con.getCon()!=null){
+            try {
+                con.cerrar();
+            } catch (SQLException ex) {
+                Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    return respuesta;
     }
 
    
 
     @Override
     public ArrayList<Cliente> listarClientes() {
-        ClienteDao clienteDao=new ClienteDao();
-        return clienteDao.obtener();
+        ArrayList<Cliente> lista;
+    try {
         
+        con.ConexionPostgres();
+        return clienteDao.obtener();
+    } catch (ClassNotFoundException ex) {
+        Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (SQLException ex) {
+        Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (InstantiationException ex) {
+        Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (IllegalAccessException ex) {
+        Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+    }finally{
+        if(con.getCon()!=null){
+            try {
+                con.cerrar();
+            } catch (SQLException ex) {
+                Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+        return new ArrayList<Cliente>();
         
       }
 
     @Override
     public Cliente buscarCliente(int id) {
-        ClienteDao clienteDao=new ClienteDao();
+    try {
+        this.con.ConexionPostgres();
         return clienteDao.buscar(id);
+    } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
+        Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+    }finally{
+        if(con.getCon()!=null){
+            try {
+                con.cerrar();
+            } catch (SQLException ex) {
+                Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }return null;
     }
     
     public Cliente buscarCliente(String id) {
-        ClienteDao clienteDao=new ClienteDao();
+    
+    try {
+        this.con.ConexionPostgres();
         return clienteDao.buscarPorCedula(id);
+        
+       
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+                if(con.getCon()!=null){
+                    try {
+                        con.cerrar();
+                    } catch (SQLException ex) {
+                             Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+                           }
+                    }
+                }
+     return null;
     }
-    public Facturacliente buscarFactura(int id) {
-        facturaDao=new FacturaclienteDao();
-        return  facturaDao.buscar(id);
+    public FacturaCliente buscarFactura(int id) {
+        try {
+            this.con.ConexionPostgres();
+            FacturaCliente factura=  facturaDao.buscar(id);
+            factura.setCliente(clienteDao.buscar(factura.getClieId()));
+                factura.setDetallefacturas(detalleDao.obtener(factura));
+                for(DetalleFactura detalle:factura.getDetallefacturas()){
+                    detalle.setFacturacliente(factura);
+                    detalle.setArticulo(articuloDao.buscar(detalle.getArtiId()));
+                }
+            return factura;
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+                if(con.getCon()!=null){
+                    try {
+                        con.cerrar();
+                    } catch (SQLException ex) {
+                             Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+                           }
+                    }
+                }
+        return null;
     }
 
     
@@ -82,58 +225,242 @@ private FacturaclienteDao facturaDao;
     
     @Override
     public boolean agregarArticulo(Articulo articulo, Cajero cajero) {
-        ArticuloDao articuloDao=new ArticuloDao();
-        return articuloDao.registrar(articulo, cajero);
+        try {
+            this.con.ConexionPostgres();
+            return articuloDao.registrar(articulo, cajero);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+        if(con.getCon()!=null){
+            try {
+                con.cerrar();
+            } catch (SQLException ex) {
+                Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }return false;
     }
     
     public Articulo agregarArticulo2(Articulo articulo, Cajero cajero) {
-        ArticuloDao articuloDao=new ArticuloDao();
+    try {
+        this.con.ConexionPostgres();
         return articuloDao.registrar2(articulo, cajero);
+    } catch (ClassNotFoundException ex) {
+        Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (SQLException ex) {
+        Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (InstantiationException ex) {
+        Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (IllegalAccessException ex) {
+        Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+    }finally{
+        if(con.getCon()!=null){
+            try {
+                con.cerrar();
+            } catch (SQLException ex) {
+                Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }return null;
     }
 
   
     @Override
     public Articulo buscarArticulo(int id) {
-         ArticuloDao articuloDao=new ArticuloDao();
-         return articuloDao.buscar(id);
+    try {
+        this.con.ConexionPostgres();
+        return articuloDao.buscar(id);
+    } catch (ClassNotFoundException ex) {
+        Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (SQLException ex) {
+        Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (InstantiationException ex) {
+        Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (IllegalAccessException ex) {
+        Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+    }finally{
+            if(con.getCon()!=null){
+                try {
+                    con.cerrar();
+                    } catch (SQLException ex) {
+                            Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                }   
+        }
+     return null;
     }
 
     @Override
     public ArrayList<Articulo> listarArticulos() {
-        articuloDao=new ArticuloDao();
-        return articuloDao.obtener();
-         }
+        try {
+            this.con.ConexionPostgres();
+            return articuloDao.obtener();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            if(con.getCon()!=null){
+                try {
+                    con.cerrar();
+                    } catch (SQLException ex) {
+                            Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                }   
+        }
+        return new ArrayList<Articulo>();
+     }
 
     @Override
-    public boolean agregarFactura(Facturacliente factura, Cajero cajero) {
-       facturaDao=new FacturaclienteDao();
-       return facturaDao.registrar(factura, cajero);
-    }
+    public boolean agregarFactura(FacturaCliente factura, Cajero cajero) {
+        try {
+            this.con.ConexionPostgres();
+            con.getCon().setAutoCommit(false);
+            
+            facturaDao.registrar(factura, cajero);
+            
+            for(DetalleFactura detalle:factura.getDetallefacturas()){
+                detalleDao.registrar(detalle, cajero);
+            }
+            con.getCon().commit();
+            return true;
+        } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
+            try {
+                Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+                con.getCon().rollback();
+            } catch (SQLException ex1) {
+                Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        }finally{
+            if(con.getCon()!=null){
+                try {
+                    con.cerrar();
+                    } catch (SQLException ex) {
+                            Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+          
+                }
+            }
+        return false;
+    }  
 
     @Override
-    public ArrayList<Facturacliente> listarFacturas() {
-       facturaDao=new FacturaclienteDao();
-       return facturaDao.obtener();
+    public ArrayList<FacturaCliente> listarFacturas() {
+        try {
+            this.con.ConexionPostgres();
+            return facturaDao.obtener();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        finally{
+                if(con.getCon()!=null){
+                    try {
+                        con.cerrar();
+                        } catch (SQLException ex) {
+                                Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+
+                    }
+                }
+        return new ArrayList<FacturaCliente>();
     }
 
     
-     public ArrayList<Facturacliente> listarFacturas(int page) {
-       facturaDao=new FacturaclienteDao();
-       return facturaDao.obtener(page*10);
-    }
+     public ArrayList<FacturaCliente> listarFacturas(int page) {
+         ArrayList<FacturaCliente> lista;
+        try {
+            this.con.ConexionPostgres();
+            lista=facturaDao.obtener(page*10);
+            for(FacturaCliente factura:lista){
+                factura.setCliente(clienteDao.buscar(factura.getClieId()));
+                factura.setDetallefacturas(detalleDao.obtener(factura));
+//                for(DetalleFactura detalle:factura.getDetallefacturas()){
+//                    detalle.setFacturacliente(factura);
+//                }
+                
+            }
+            return lista;
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+                if(con.getCon()!=null){
+                    try {
+                        con.cerrar();
+                        } catch (SQLException ex) {
+                                Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+
+                    }
+                }
+        return new ArrayList<FacturaCliente>();
+     }
     
     @Override
     public boolean editarArticulo(Articulo articulo, Cajero cajero) {
-        articuloDao=new ArticuloDao();
-        return articuloDao.actualizar(articulo, cajero);
+            try {
+                this.con.ConexionPostgres();
+                return articuloDao.actualizar(articulo, cajero);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InstantiationException ex) {
+                Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalAccessException ex) {
+                Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            finally{
+                if(con.getCon()!=null){
+                    try {
+                        con.cerrar();
+                        } catch (SQLException ex) {
+                                Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+
+                    }
+                }
+            return false;
     }
 
     
     @Override
     public boolean eliminarArticulo(int id, Cajero cajero) {
-        articuloDao=new ArticuloDao();
-        return articuloDao.eliminar(id, cajero);
-        }
+            try {
+                this.con.ConexionPostgres();
+                return articuloDao.eliminar(id, cajero);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InstantiationException ex) {
+                Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalAccessException ex) {
+                Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        return false;    
+     }
 
    
     

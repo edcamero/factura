@@ -8,13 +8,12 @@ package DAO;
 import Conexion.Conexion;
 import VO.Articulo;
 import VO.Cajero;
-import VO.Detallefactura;
-import VO.Facturacliente;
+import VO.DetalleFactura;
+import VO.FacturaCliente;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,7 +21,7 @@ import java.util.logging.Logger;
  *
  * @author blade
  */
-public class DetallefacturaDao implements InterfazDao<Detallefactura> {
+public class DetallefacturaDao implements InterfazDao<DetalleFactura> {
     private Conexion con;
     private PreparedStatement pst;
     private ResultSet rs;
@@ -30,17 +29,15 @@ public class DetallefacturaDao implements InterfazDao<Detallefactura> {
 
     public DetallefacturaDao(Conexion con) {
         this.con = con;
-        this.ad=new ArticuloDao();
     }
     public DetallefacturaDao() {
         this.con = Conexion.getConexion();
-        this.ad=new ArticuloDao();
     }
 
     
     
     @Override
-    public boolean registrar(Detallefactura elemento, Cajero cajero) {
+    public boolean registrar(DetalleFactura elemento, Cajero cajero) {
         
         try {
             
@@ -85,48 +82,45 @@ public class DetallefacturaDao implements InterfazDao<Detallefactura> {
     }
 
     @Override
-    public ArrayList<Detallefactura> obtener() {
+    public ArrayList<DetalleFactura> obtener() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
-    public void obtener(Facturacliente factura) throws SQLException {
-            
-             con=Conexion.getConexion();
-             Detallefactura detalle;
+    public ArrayList<DetalleFactura> obtener(FacturaCliente factura) throws SQLException {
+            ArrayList<DetalleFactura> lista=new ArrayList<DetalleFactura>();
+             DetalleFactura detalle;
              String consulta="select * FROM facturacion.detallefactura where facl_id=?;";
-             Articulo articulo;
+             
              try {
             
-                    con.ConexionPostgres();
                     pst=con.getCon().prepareStatement(consulta);
                     pst.setInt(1,factura.getFaclId());
                     rs=pst.executeQuery();
 
                     while (rs.next()) {
-                        //Cliente(int clieId, String clieDocumento, String clieNombre, String clieApellido, String clieDireccion, String clieTelefono, String clieEmail, Date clieFechacambio, String clieRegistradopor) {
-                         articulo=ad.buscar(3);
-                          detalle=new Detallefactura(rs.getInt(1), articulo, factura, rs.getInt(4),rs.getInt(5), rs.getDate(6), rs.getString(7));
-                         factura.getDetallefacturas().add(detalle);
+                        
+                         detalle=new DetalleFactura(rs.getInt(1), rs.getInt(2), rs.getInt(4),rs.getInt(5), rs.getDate(6), rs.getString(7));
+                         //System.out.println(detalle);
+                         lista.add(detalle);
                         //Cliente c=new Cliente(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getDate(8),rs.getString(9));
                         //System.out.println(c.toString());
                        // lista.add(c);
              }
+                    return lista;
              
-         } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
+         } catch (SQLException ex) {
              Logger.getLogger(ClienteDao.class.getName()).log(Level.SEVERE, null, ex);
-         }finally{
-                con.cerrar(); 
-             }
-         //return lista;
+         }
+         return lista;
     }
 
     @Override
-    public Detallefactura buscar(int id) {
+    public DetalleFactura buscar(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean actualizar(Detallefactura articulo, Cajero cajero) {
+    public boolean actualizar(DetalleFactura articulo, Cajero cajero) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

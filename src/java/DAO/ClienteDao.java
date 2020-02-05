@@ -24,17 +24,21 @@ public class ClienteDao implements InterfazDao<Cliente>{
     private PreparedStatement pst;
     private ResultSet rs;
 
+    public ClienteDao(Conexion con) {
+        this.con = con;
+    }
+
     @Override
     public boolean registrar(Cliente cliente, Cajero cajero) {
+         
          try {
              boolean res=false;
-             con=Conexion.getConexion();
              String consulta="INSERT INTO facturacion.cliente(clie_documento,clie_nombre,clie_apellido,clie_direccion,clie_telefono,clie_email,clie_registradopor      )\n" +
-                             "    VALUES (?,?,?,?,?,?,?) returning clie_id;";
+                     "    VALUES (?,?,?,?,?,?,?) returning clie_id;";
              
              
              
-             con.ConexionPostgres();
+             
              pst=con.getCon().prepareStatement(consulta,ResultSet.TYPE_SCROLL_SENSITIVE,
                      ResultSet.CONCUR_UPDATABLE);
              pst.setString(1,cliente.getClieDocumento());
@@ -53,27 +57,30 @@ public class ClienteDao implements InterfazDao<Cliente>{
              }
              
              return true;
-         } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
+         } catch (SQLException ex) {
              Logger.getLogger(ClienteDao.class.getName()).log(Level.SEVERE, null, ex);
          }finally{
-             try {
-                 con.cerrar();
-             } catch (SQLException ex) {
-                 Logger.getLogger(ClienteDao.class.getName()).log(Level.SEVERE, null, ex);
-             }
-         }
+            if(con.getCon()!=null){
+                try {
+                    con.cerrar();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ClienteDao.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+         
+         
           return false;  
     }
 
     @Override
     public ArrayList<Cliente> obtener() {
             ArrayList<Cliente> lista=new ArrayList();
-             con=Conexion.getConexion();
+             
              String consulta="select * FROM facturacion.cliente ORDER BY clie_id;";
              
              try {
             
-                    con.ConexionPostgres();
                     pst=con.getCon().prepareStatement(consulta,ResultSet.TYPE_SCROLL_SENSITIVE,
                             ResultSet.CONCUR_UPDATABLE);
                     rs=pst.executeQuery();
@@ -86,22 +93,15 @@ public class ClienteDao implements InterfazDao<Cliente>{
                         lista.add(c);
              }
              
-         } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
+         } catch (SQLException ex) {
              Logger.getLogger(ClienteDao.class.getName()).log(Level.SEVERE, null, ex);
-         }finally{
-                try {
-                    con.cerrar();
-                } catch (SQLException ex) {
-                    Logger.getLogger(ClienteDao.class.getName()).log(Level.SEVERE, null, ex);
-                }
-             }
+         }
          return lista;
     }
 
     @Override
     public boolean actualizar(Cliente cliente, Cajero cajero) {
        try {
-            con=Conexion.getConexion();
             String consulta="update facturacion.cliente set\n" +
                                                 "clie_documento=?,\n" +
                                                 "clie_nombre=?,\n" +
@@ -112,7 +112,7 @@ public class ClienteDao implements InterfazDao<Cliente>{
                                                 "clie_registradopor=?\n" +
                                                 "where clie_id=? returning *";
             
-            con.ConexionPostgres();
+            
             pst=con.getCon().prepareStatement(consulta,ResultSet.TYPE_SCROLL_SENSITIVE,
                     ResultSet.CONCUR_UPDATABLE);
             pst.setString(1, cliente.getClieDocumento());
@@ -128,15 +128,9 @@ public class ClienteDao implements InterfazDao<Cliente>{
             
             
             return true;
-        } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(ArticuloDao.class.getName()).log(Level.SEVERE, null, ex);
-        }finally{
-           try {
-               con.cerrar();
-           } catch (SQLException ex) {
-               Logger.getLogger(ClienteDao.class.getName()).log(Level.SEVERE, null, ex);
-           }
-       }
+        }
         return false;
     }
 
@@ -165,12 +159,6 @@ public class ClienteDao implements InterfazDao<Cliente>{
           
         } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
             Logger.getLogger(ClienteDao.class.getName()).log(Level.SEVERE, null, ex);
-        }finally{
-            try {
-                con.cerrar();
-            } catch (SQLException ex) {
-                Logger.getLogger(ClienteDao.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
           return false;
     }
@@ -179,12 +167,12 @@ public class ClienteDao implements InterfazDao<Cliente>{
     public Cliente buscar(int id) {
           Cliente cliente=null;
         
-             con=Conexion.getConexion();
+            
              String consulta="select * FROM facturacion.cliente where clie_id=?;";
              
              try {
             
-                    con.ConexionPostgres();
+                   
                     pst=con.getCon().prepareStatement(consulta);
                     pst.setInt(1, id);
                     rs=pst.executeQuery();
@@ -198,15 +186,9 @@ public class ClienteDao implements InterfazDao<Cliente>{
                         
              }
              
-         } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
+         } catch (SQLException ex) {
              Logger.getLogger(ClienteDao.class.getName()).log(Level.SEVERE, null, ex);
-         }finally{
-                 try {
-                     con.cerrar();
-                 } catch (SQLException ex) {
-                     Logger.getLogger(ClienteDao.class.getName()).log(Level.SEVERE, null, ex);
-                 }
-             }
+         }
          return  cliente;
     }
     
@@ -215,12 +197,12 @@ public class ClienteDao implements InterfazDao<Cliente>{
     public Cliente buscarPorCedula(String id) {
        
         
-             con=Conexion.getConexion();
+            
              String consulta="select * FROM facturacion.cliente where clie_documento=?;";
              
              try {
             
-                    con.ConexionPostgres();
+                    
                     pst=con.getCon().prepareStatement(consulta,ResultSet.TYPE_SCROLL_SENSITIVE,
                             ResultSet.CONCUR_UPDATABLE);
                     pst.setString(1, id);
@@ -234,15 +216,9 @@ public class ClienteDao implements InterfazDao<Cliente>{
                         
              }
              
-         } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
+         } catch (SQLException ex) {
              Logger.getLogger(ClienteDao.class.getName()).log(Level.SEVERE, null, ex);
-         }finally{
-                 try {
-                     con.cerrar();
-                 } catch (SQLException ex) {
-                     Logger.getLogger(ClienteDao.class.getName()).log(Level.SEVERE, null, ex);
-                 }
-             }
+         }
          return  null;
     }
 }

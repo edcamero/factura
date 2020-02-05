@@ -25,12 +25,12 @@
             <div class="row">
                   <div class="col form-group">
                     <label for="nombre"><strong>Nombre del Cliente</strong></label>
-                    <input type="text" class="form-control" name="nombre" id="nombre" onkeypress="return soloLetras(event)" aria-describedby="emailHelp" placeholder="Ingrese el nombre">
+                    <input type="text" requierd class="form-control" name="nombre" id="nombre" onkeypress="return soloLetras(event)" aria-describedby="emailHelp" placeholder="Ingrese el nombre" required>
                     
                   </div>
                   <div class="col form-group">
                       <label for="Apellido"><strong>Apellido del Cliente</strong></label>
-                      <input type="text" class="form-control" name="apellido" id="apellido" onkeypress="return soloLetras(event)"  aria-describedby="emailHelp" placeholder="Ingrese el apellido">
+                      <input type="text" class="form-control" name="apellido" id="apellido" onkeypress="return soloLetras(event)"  aria-describedby="emailHelp" placeholder="Ingrese el apellido" required>
                       
                   </div>
              </div>
@@ -40,12 +40,12 @@
              <div class="row">
               <div class="col form-group">
                 <label for="documento"><strong>Documento del Cliente</strong></label>
-                <input type="text" class="form-control" name="documento" id="documento" aria-describedby="emailHelp" placeholder="Ingrese el documento">
+                <input type="text" class="form-control" name="documento" id="documento" aria-describedby="emailHelp" placeholder="Ingrese el documento" required>
                 
               </div>
               <div class="col form-group">
                   <label for="telefono"><strong>Telefono del Cliente</strong></label>
-                  <input type="text" class="form-control" name="telefono" id="telefono" aria-describedby="emailHelp" placeholder="Ingrese el telefono">
+                  <input type="text" class="form-control" name="telefono" id="telefono" aria-describedby="emailHelp" placeholder="Ingrese el telefono" required>
                   
               </div>
          </div>
@@ -57,12 +57,12 @@
          <div class="row">
           <div class="col form-group">
             <label for="direccio"><strong>Direccion  del Cliente</strong></label>
-            <input type="text" class="form-control" name="direccion" id="direccion" aria-describedby="emailHelp" placeholder="Ingrese el direccion">
+            <input type="text" class="form-control" name="direccion" id="direccion" aria-describedby="emailHelp" placeholder="Ingrese el direccion" required>
             
           </div>
           <div class="col form-group">
               <label for="email"><strong>E-mail del Cliente</strong></label>
-              <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Ingrese el email">
+              <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Ingrese el email" required>
               
           </div>
 

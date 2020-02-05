@@ -3,12 +3,14 @@
     Created on : 29-ene-2020, 14:26:44
     Author     : blade
 --%>
+<%@page import="VO.DetalleFactura"%>
+<%@page import="VO.Cliente"%>
+<%@page import="VO.FacturaCliente"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="VO.Detallefactura"%>
-<%@page import="VO.Facturacliente"%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<%Facturacliente factura=(Facturacliente)(request.getSession().getAttribute("factura"));%>
+<%FacturaCliente factura=(FacturaCliente)(request.getSession().getAttribute("factura"));%>
 <!DOCTYPE html>
 <html>
     <jsp:include page="head.jsp" flush="true" />
@@ -91,7 +93,7 @@
                       </thead>
                       
                       <% int x=1; %>
-                        <% for(Detallefactura fa:factura.getDetallefacturas()) { %>
+                        <% for(DetalleFactura fa:factura.getDetallefacturas()) { %>
                         <tr  >
                             <th scope="row"> <%=x++%></th>
                             <td > <%=fa.getArticulo().getArtiNombre() %></td>

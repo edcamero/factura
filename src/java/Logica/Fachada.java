@@ -8,7 +8,7 @@ package Logica;
 import VO.Articulo;
 import VO.Cajero;
 import VO.Cliente;
-import VO.Facturacliente;
+import VO.FacturaCliente;
 import java.util.ArrayList;
 
 /**
@@ -93,20 +93,20 @@ public class Fachada {
         return this.mediador.md5(palabra);
     }
   
-    public boolean agregarFactura(Facturacliente factura, Cajero cajero) {
+    public boolean agregarFactura(FacturaCliente factura, Cajero cajero) {
        return this.mediador.agregarFactura(factura, cajero);
     }
 
    
-    public ArrayList<Facturacliente> listarFacturas() {
+    public ArrayList<FacturaCliente> listarFacturas() {
             return this.mediador.listarFacturas();
     }
     
-    public ArrayList<Facturacliente> listarFacturas(int page) {
+    public ArrayList<FacturaCliente> listarFacturas(int page) {
             return this.mediador.listarFacturas(page);
     }
     
-    public Facturacliente buscarFactura(int id){
+    public FacturaCliente buscarFactura(int id){
         return this.mediador.buscarFactura(id);
     }
 }

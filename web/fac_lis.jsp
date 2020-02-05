@@ -3,13 +3,13 @@
     Created on : 29-ene-2020, 14:26:44
     Author     : blade
 --%>
+<%@page import="VO.FacturaCliente"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="VO.Detallefactura"%>
-<%@page import="VO.Facturacliente"%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<%ArrayList<Facturacliente> facturas=(ArrayList<Facturacliente> )(request.getAttribute("facturas"));%>
+<%ArrayList<FacturaCliente> facturas=(ArrayList<FacturaCliente> )(request.getAttribute("facturas"));%>
 <%Integer pagina=Integer.parseInt(request.getAttribute("page").toString());%>
 
 <!DOCTYPE html>
@@ -54,11 +54,11 @@
                       </thead>
                       
                       
-                        <% for(Facturacliente fa:facturas) { %>
+                        <% for(FacturaCliente fa:facturas) { %>
                         <tr  >
                             <th scope="row"> <%=fa.getFaclId() %> <button type="button" class="btn btn-info" @click="ver(<%=fa.getFaclId() %>)">Ver</button></th>
                             <td > <%=fa.getFaclFecha() %></td>
-                            <td > <%=fa.getCliente().getClieNombre()%> <%=fa.getCliente().getClieNombre() %></td>
+                            <td > <%=fa.getCliente().getClieNombre()%> <%=fa.getCliente().getClieApellido() %></td>
                             <td > <%=fa.getCliente().getClieDocumento() %></td>
                             <td > $ <%=fa.getFaclTotal() %></td>
                                  

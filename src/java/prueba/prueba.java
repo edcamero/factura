@@ -5,15 +5,10 @@
  */
 package prueba;
 
-import DAO.ArticuloDao;
-import DAO.ClienteDao;
-import DAO.FacturaclienteDao;
 import Logica.Fachada;
 import VO.Articulo;
 import VO.Cajero;
-import VO.Cliente;
-import VO.Detallefactura;
-import VO.Facturacliente;
+import VO.FacturaCliente;
 import com.google.gson.Gson;
 
 /**
@@ -24,9 +19,7 @@ public class prueba {
    
     
     public static void main(String []arg){
-       ArticuloDao ad=new ArticuloDao();
-       ClienteDao cd=new ClienteDao();
-       FacturaclienteDao fcd=new FacturaclienteDao();
+       
        
         Gson gson=new Gson();
        
@@ -44,11 +37,11 @@ public class prueba {
 //      
 //       Cliente cliente=Fachada.getInstancia().buscarCliente("10909090");
         //System.out.println(Fachada.getInstancia().buscarCliente(1));
-        Facturacliente factura =new Facturacliente(Fachada.getInstancia().buscarCliente(1));
+        FacturaCliente factura =new FacturaCliente(Fachada.getInstancia().buscarCliente(1));
        
         factura.AgregarArticulo(2, c);
-        System.out.println(factura);
-        Fachada.getInstancia().agregarFactura(factura, cajero);
+        System.out.println(Fachada.getInstancia().buscarFactura(7).getDetallefacturas());
+        
 //       Facturacliente factura=new Facturacliente(cliente);
 //        factura.AgregarArticulo(5, c);
 //        System.out.println(gson.toJson(factura.toString()));

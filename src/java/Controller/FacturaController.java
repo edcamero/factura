@@ -9,8 +9,8 @@ import Logica.Fachada;
 import VO.Articulo;
 import VO.Cajero;
 import VO.Cliente;
-import VO.Detallefactura;
-import VO.Facturacliente;
+import VO.DetalleFactura;
+import VO.FacturaCliente;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -30,7 +30,7 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "FacturaController", urlPatterns = {"/FacturaController"})
 public class FacturaController extends HttpServlet {
     private RequestDispatcher rd = null;
-    private Facturacliente factura;
+    private FacturaCliente factura;
     private int id;
     HttpSession misession;
     private Cliente cliente;
@@ -76,7 +76,7 @@ public class FacturaController extends HttpServlet {
              
              case "listar":
                     int page= Integer.parseInt(request.getParameter("page"));  
-                    ArrayList<Facturacliente> lista=fachada.listarFacturas(page);
+                    ArrayList<FacturaCliente> lista=fachada.listarFacturas(page);
                     request.setAttribute("facturas", lista);
                     request.setAttribute("page", page);
                     //request.setAttribute("next", page+1);
@@ -121,7 +121,7 @@ public class FacturaController extends HttpServlet {
         switch(action){
             case "iniciar":
                 cliente=fachada.buscarCliente(Integer.parseInt(request.getParameter("id_cliente")));
-                factura=new Facturacliente(cliente);
+                factura=new FacturaCliente(cliente);
                 misession= request.getSession(true);
                 misession.setAttribute("factura",factura);
                  out=response.getWriter();
@@ -135,7 +135,7 @@ public class FacturaController extends HttpServlet {
                 articulo=fachada.buscarArticulo(Integer.parseInt(request.getParameter("id_articulo")));
                 int cant=Integer.parseInt(request.getParameter("cantidad"));
                 misession= (HttpSession) request.getSession();
-                factura=(Facturacliente)misession.getAttribute("factura");
+                factura=(FacturaCliente)misession.getAttribute("factura");
                 factura.AgregarArticulo(cant, articulo);
                 misession.setAttribute("factura",factura);
                 out=response.getWriter();
@@ -148,8 +148,8 @@ public class FacturaController extends HttpServlet {
             case "eliminar_deta":
                 int  index=Integer.parseInt(request.getParameter("index"));
                 misession= (HttpSession) request.getSession();
-                factura=(Facturacliente)misession.getAttribute("factura");
-                Detallefactura detalle=factura.eliminarArticulo(index);
+                factura=(FacturaCliente)misession.getAttribute("factura");
+                DetalleFactura detalle=factura.eliminarArticulo(index);
                 misession.setAttribute("factura",factura);
                 out=response.getWriter();
                 //ArrayList<Pelicula> pelis=PeliculaDao.listar(Integer.valueOf(request.getParameter("id")));
@@ -163,7 +163,7 @@ public class FacturaController extends HttpServlet {
                 HttpSession sesion = (HttpSession)request.getSession(false);
                 Cajero cajero=(Cajero)sesion.getAttribute("cajero");
                 misession= (HttpSession) request.getSession();
-                factura=(Facturacliente)misession.getAttribute("factura");
+                factura=(FacturaCliente)misession.getAttribute("factura");
                 if(fachada.agregarFactura(factura, cajero)){
                     
                     request.getSession().setAttribute("factura", factura);

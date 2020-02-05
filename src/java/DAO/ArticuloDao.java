@@ -26,17 +26,19 @@ public class ArticuloDao implements InterfazDao<Articulo>{
     private ResultSet rs;
     Articulo c;
 
+    public ArticuloDao(Conexion con) {
+        this.con = con;
+    }
+
     @Override
     public boolean registrar(Articulo articulo,Cajero cajero) {
         
             boolean res=false;
-            con=Conexion.getConexion();
             //String consulta="select now()";
             String consulta="	INSERT INTO facturacion.articulo( arti_nombre, arti_valorunitario, arti_existencia, \n" +
                     "            arti_registradopor)\n" +
                     "    VALUES (?,?, ?,?) returning arti_id;";
             try {
-            con.ConexionPostgres();
             pst=con.getCon().prepareStatement(consulta,ResultSet.TYPE_SCROLL_SENSITIVE,
                     ResultSet.CONCUR_UPDATABLE);
             pst.setString(1, articulo.getArtiNombre());
@@ -52,30 +54,20 @@ public class ArticuloDao implements InterfazDao<Articulo>{
             }
             
             return true;
-            
-            
-            
-            
-        } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
+           
+        } catch (SQLException ex) {
             Logger.getLogger(ArticuloDao.class.getName()).log(Level.SEVERE, null, ex);
-        }finally{
-                try {   
-                    con.cerrar();
-                } catch (SQLException ex) {
-                    Logger.getLogger(ArticuloDao.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
+        }
         return res;
     }
 
     @Override
     public ArrayList<Articulo> obtener() {
        ArrayList<Articulo> lista=new ArrayList();
-        con=Conexion.getConexion();
+        
         String consulta="select * FROM facturacion.articulo ORDER BY arti_id;";
         
         try {
-            con.ConexionPostgres();
             pst=con.getCon().prepareStatement(consulta,ResultSet.TYPE_SCROLL_SENSITIVE, 
                 ResultSet.CONCUR_UPDATABLE);
             rs=pst.executeQuery();
@@ -86,9 +78,8 @@ public class ArticuloDao implements InterfazDao<Articulo>{
                     //System.out.println(c.toString());
                     lista.add(c);
             }
-            con.cerrar();
         
-        } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
+        } catch (SQLException ex) {
         }
        return lista;
     }
@@ -96,7 +87,6 @@ public class ArticuloDao implements InterfazDao<Articulo>{
     @Override
     public boolean actualizar(Articulo articulo, Cajero cajero) {
         try {
-            con=Conexion.getConexion();
             String consulta="update facturacion.articulo\n" +
                             "set \n" +
                             "arti_nombre=?,\n" +
@@ -105,7 +95,7 @@ public class ArticuloDao implements InterfazDao<Articulo>{
                             "arti_registradopor=?\n" +
                             "where arti_id=? returning *";
             
-            con.ConexionPostgres();
+           
             pst=con.getCon().prepareStatement(consulta,ResultSet.TYPE_SCROLL_SENSITIVE,
                     ResultSet.CONCUR_UPDATABLE);
             pst.setString(1, articulo.getArtiNombre());
@@ -118,14 +108,8 @@ public class ArticuloDao implements InterfazDao<Articulo>{
             
             
             return true;
-        } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(ArticuloDao.class.getName()).log(Level.SEVERE, null, ex);
-        }finally{
-            try {
-                con.cerrar();
-            } catch (SQLException ex) {
-                Logger.getLogger(ArticuloDao.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
         return false;
     }
@@ -133,10 +117,9 @@ public class ArticuloDao implements InterfazDao<Articulo>{
     @Override
     public boolean eliminar(int id, Cajero cajero) {
         try {
-            con=Conexion.getConexion();
             String consulta="select pr_d_articulo(?,?)";
             
-            con.ConexionPostgres();
+            
             pst=con.getCon().prepareStatement(consulta,ResultSet.TYPE_SCROLL_SENSITIVE,
                     ResultSet.CONCUR_UPDATABLE);
             
@@ -149,21 +132,11 @@ public class ArticuloDao implements InterfazDao<Articulo>{
                 return true;
             }
             
-            
-            
-            
-            
-            
+         
           
-        } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(ArticuloDao.class.getName()).log(Level.SEVERE, null, ex);
             return false;
-        }finally{
-            try {
-                con.cerrar();
-            } catch (SQLException ex) {
-                Logger.getLogger(ArticuloDao.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }return false;
          }
 
@@ -172,11 +145,9 @@ public class ArticuloDao implements InterfazDao<Articulo>{
         
         c=null;
       
-        con=Conexion.getConexion();
         String consulta="select * FROM facturacion.articulo where arti_id=?;";
         
         try {
-            con.ConexionPostgres();
             pst=con.getCon().prepareStatement(consulta);
             pst.setInt(1, id);
             
@@ -193,15 +164,10 @@ public class ArticuloDao implements InterfazDao<Articulo>{
             
             
         
-        } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
+        } catch (SQLException ex) {
+            Logger.getLogger(ArticuloDao.class.getName()).log(Level.SEVERE, null, ex);
         }
-        finally{
-            try {
-                con.cerrar();
-            } catch (SQLException ex) {
-                Logger.getLogger(ArticuloDao.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        
     return c;
     }
 
@@ -211,13 +177,11 @@ public class ArticuloDao implements InterfazDao<Articulo>{
       public Articulo registrar2(Articulo articulo,Cajero cajero) {
         
             boolean res=false;
-            con=Conexion.getConexion();
             //String consulta="select now()";
             String consulta="	INSERT INTO facturacion.articulo( arti_nombre, arti_valorunitario, arti_existencia, \n" +
                     "            arti_registradopor)\n" +
                     "    VALUES (?,?, ?,?) returning arti_id;";
             try {
-            con.ConexionPostgres();
             pst=con.getCon().prepareStatement(consulta,ResultSet.TYPE_SCROLL_SENSITIVE,
                     ResultSet.CONCUR_UPDATABLE);
             pst.setString(1, articulo.getArtiNombre());
@@ -231,21 +195,11 @@ public class ArticuloDao implements InterfazDao<Articulo>{
                 articulo.setArtiId(rs.getInt(1));
                 
             }
-            
            return articulo;
-            
-            
-            
-            
-        } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
+          
+        } catch (SQLException ex) {
             Logger.getLogger(ArticuloDao.class.getName()).log(Level.SEVERE, null, ex);
-        }finally{
-                try { 
-                    con.cerrar();
-                } catch (SQLException ex) {
-                    Logger.getLogger(ArticuloDao.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
+        }
         return null;
     }
 }

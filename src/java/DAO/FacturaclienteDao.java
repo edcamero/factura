@@ -7,9 +7,7 @@ package DAO;
 
 import Conexion.Conexion;
 import VO.Cajero;
-import VO.Cliente;
-import VO.Detallefactura;
-import VO.Facturacliente;
+import VO.FacturaCliente;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,23 +19,27 @@ import java.util.logging.Logger;
  *
  * @author blade
  */
-public class FacturaclienteDao implements InterfazDao<Facturacliente>{
+public class FacturaclienteDao implements InterfazDao<FacturaCliente>{
  private Conexion con;
     private PreparedStatement pst;
     private ResultSet rs;
+
+    public FacturaclienteDao(Conexion con) {
+        this.con = con;
+    }
+    
+    
+    
     @Override
-    public boolean registrar(Facturacliente factura, Cajero cajero) {
-            boolean res=false;
-            con=Conexion.getConexion();
-            DetallefacturaDao dd=new DetallefacturaDao(con);
+    public boolean registrar(FacturaCliente factura, Cajero cajero) {
+            
             //String consulta="select now()";
             String consulta="insert into  facturacion.facturacliente(clie_id,facl_total,facl_registradopor)\n" +
                             "values (?,?,?) returning *;";
             
             
          try {
-             con.ConexionPostgres();
-             con.getCon().setAutoCommit(false);
+             
              pst=con.getCon().prepareStatement(consulta,ResultSet.TYPE_SCROLL_SENSITIVE,
                      ResultSet.CONCUR_UPDATABLE);
              
@@ -57,17 +59,14 @@ public class FacturaclienteDao implements InterfazDao<Facturacliente>{
 //            }
 
 
-            for(Detallefactura df:factura.getDetallefacturas()){
-                dd.registrar(df, cajero);
-            }
+           
              
-             con.getCon().commit();
              return true;
              
              
              
              
-         } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
+         } catch (SQLException ex) {
              Logger.getLogger(ArticuloDao.class.getName()).log(Level.SEVERE, null, ex);
              try {
                  con.getCon().rollback();
@@ -75,52 +74,36 @@ public class FacturaclienteDao implements InterfazDao<Facturacliente>{
                  Logger.getLogger(FacturaclienteDao.class.getName()).log(Level.SEVERE, null, ex1);
              }
          }
-         finally{
-             try {
-                 con.cerrar();
-             } catch (SQLException ex) {
-                 Logger.getLogger(FacturaclienteDao.class.getName()).log(Level.SEVERE, null, ex);
-             }
-         }
      
-        return res;
+        return false;
     }
 
     @Override
-    public ArrayList<Facturacliente> obtener() {
-         ClienteDao clienteDao=new ClienteDao();
+    public ArrayList<FacturaCliente> obtener() {
          
         
-            ArrayList<Facturacliente> lista=new ArrayList();
-             con=Conexion.getConexion();
-             DetallefacturaDao detalleDao=new DetallefacturaDao();
+            ArrayList<FacturaCliente> lista=new ArrayList();
+             
              String consulta="select * FROM facturacion.facturacliente ORDER BY facl_id  DESC;";
              
              try {
             
-                    con.ConexionPostgres();
                     pst=con.getCon().prepareStatement(consulta);
                     rs=pst.executeQuery();
                     
                     while (rs.next()) {
-                        Cliente cliente=clienteDao.buscar(rs.getInt(2));
+                   //     Cliente cliente=clienteDao.buscar(rs.getInt(2));
                          //Cliente c=new Cliente(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getDate(8),rs.getString(9));
                         //System.out.println(c.toString());
-                        Facturacliente fc=new Facturacliente(rs.getInt(1), cliente,rs.getInt(3),rs.getDate(4),rs.getDate(5),rs.getString(6));
+ //                       Facturacliente fc=new Facturacliente(rs.getInt(1), cliente,rs.getInt(3),rs.getDate(4),rs.getDate(5),rs.getString(6));
                         //fc.setDetallefacturas(detallefacturas);
-                        detalleDao.obtener(fc);
-                        lista.add(fc);
+ //                       detalleDao.obtener(fc);
+  //                      lista.add(fc);
              }
              
-         } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
+         } catch (SQLException ex) {
              Logger.getLogger(ClienteDao.class.getName()).log(Level.SEVERE, null, ex);
-         }finally{
-                try {
-                    con.cerrar();
-                } catch (SQLException ex) {
-                    Logger.getLogger(FacturaclienteDao.class.getName()).log(Level.SEVERE, null, ex);
-                }
-             }
+         }
          return lista;
        
     
@@ -129,13 +112,12 @@ public class FacturaclienteDao implements InterfazDao<Facturacliente>{
     
     
     
-      public ArrayList<Facturacliente> obtener(int page) {
-         ClienteDao clienteDao=new ClienteDao();
+      public ArrayList<FacturaCliente> obtener(int page) {
+         
          
         
-            ArrayList<Facturacliente> lista=new ArrayList();
+            ArrayList<FacturaCliente> lista=new ArrayList();
              con=Conexion.getConexion();
-             DetallefacturaDao detalleDao=new DetallefacturaDao();
              String consulta="select * FROM facturacion.facturacliente ORDER BY facl_id  DESC LIMIT 10 OFFSET "+page+";";
              
              try {
@@ -144,32 +126,21 @@ public class FacturaclienteDao implements InterfazDao<Facturacliente>{
                     pst=con.getCon().prepareStatement(consulta);
                     rs=pst.executeQuery();
                     
-                    while (rs.next()) {
-                        Cliente cliente=clienteDao.buscar(rs.getInt(2));
-                         //Cliente c=new Cliente(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getDate(8),rs.getString(9));
-                        //System.out.println(c.toString());
-                        Facturacliente fc=new Facturacliente(rs.getInt(1), cliente,rs.getInt(3),rs.getDate(4),rs.getDate(5),rs.getString(6));
-                        //fc.setDetallefacturas(detallefacturas);
-                        detalleDao.obtener(fc);
-                        lista.add(fc);
-             }
+                   while (rs.next()) {
+                        FacturaCliente factura=new FacturaCliente(rs.getInt(1), rs.getInt(2),rs.getInt(3),rs.getDate(4),rs.getDate(5),rs.getString(6));
+                        lista.add(factura);
+            }
              
          } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
              Logger.getLogger(ClienteDao.class.getName()).log(Level.SEVERE, null, ex);
-         }finally{
-                try {
-                    con.cerrar();
-                } catch (SQLException ex) {
-                    Logger.getLogger(FacturaclienteDao.class.getName()).log(Level.SEVERE, null, ex);
-                }
-             }
+         }
          return lista;
        
     
     }
 
     @Override
-    public Facturacliente buscar(int id) {
+    public FacturaCliente buscar(int id) {
         
         con=Conexion.getConexion();
              String consulta="select * FROM facturacion.facturacliente where  facl_id=?;";
@@ -183,30 +154,19 @@ public class FacturaclienteDao implements InterfazDao<Facturacliente>{
                     rs=pst.executeQuery();
                     
                     while (rs.next()) {
-                        Cliente cliente=new ClienteDao().buscar(rs.getInt(2));
-                         //Cliente c=new Cliente(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getDate(8),rs.getString(9));
-                        //System.out.println(c.toString());
-                        Facturacliente fc=new Facturacliente(rs.getInt(1), cliente,rs.getInt(3),rs.getDate(4),rs.getDate(5),rs.getString(6));
-                        //fc.setDetallefacturas(detallefacturas);
-                        new DetallefacturaDao(con).obtener(fc);
-                        return fc;
+                        return new FacturaCliente(rs.getInt(1), rs.getInt(2),rs.getInt(3),rs.getDate(4),rs.getDate(5),rs.getString(6));
+                        
              }
             
          } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
              Logger.getLogger(ClienteDao.class.getName()).log(Level.SEVERE, null, ex);
-             return null;
-         }finally{
-            try { 
-                con.cerrar();
-            } catch (SQLException ex) {
-                Logger.getLogger(FacturaclienteDao.class.getName()).log(Level.SEVERE, null, ex);
-            }
-             }
+             
+         }
          return null;}
     
 
     @Override
-    public boolean actualizar(Facturacliente articulo, Cajero cajero) {
+    public boolean actualizar(FacturaCliente articulo, Cajero cajero) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
