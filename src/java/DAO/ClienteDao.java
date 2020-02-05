@@ -151,11 +151,7 @@ public class ClienteDao implements InterfazDao<Cliente>{
                 rs=pst.executeQuery();
                 
                     return true;
-                
-                
-            
-            
-            
+     
           
         } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
             Logger.getLogger(ClienteDao.class.getName()).log(Level.SEVERE, null, ex);

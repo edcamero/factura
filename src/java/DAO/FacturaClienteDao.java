@@ -19,12 +19,12 @@ import java.util.logging.Logger;
  *
  * @author blade
  */
-public class FacturaclienteDao implements InterfazDao<FacturaCliente>{
+public class FacturaClienteDao implements InterfazDao<FacturaCliente>{
  private Conexion con;
     private PreparedStatement pst;
     private ResultSet rs;
 
-    public FacturaclienteDao(Conexion con) {
+    public FacturaClienteDao(Conexion con) {
         this.con = con;
     }
     
@@ -71,7 +71,7 @@ public class FacturaclienteDao implements InterfazDao<FacturaCliente>{
              try {
                  con.getCon().rollback();
              } catch (SQLException ex1) {
-                 Logger.getLogger(FacturaclienteDao.class.getName()).log(Level.SEVERE, null, ex1);
+                 Logger.getLogger(FacturaClienteDao.class.getName()).log(Level.SEVERE, null, ex1);
              }
          }
      
@@ -172,7 +172,28 @@ public class FacturaclienteDao implements InterfazDao<FacturaCliente>{
 
     @Override
     public boolean eliminar(int id, Cajero cajero) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    try {
+                con=Conexion.getConexion();
+                String consulta="select pr_d_facturacliente(?,?);";
+
+                con.ConexionPostgres();
+                pst=con.getCon().prepareStatement(consulta,ResultSet.TYPE_SCROLL_SENSITIVE,
+                        ResultSet.CONCUR_UPDATABLE);
+
+                pst.setInt(1, id);
+                pst.setString(2, "cajero: "+cajero.getCajeId()+" "+cajero.getCajeNombre()+" "+cajero.getCajeApellido());
+
+
+                rs=pst.executeQuery();
+                
+                    return true;
+     
+          
+        } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(ClienteDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+          return false;
+    
     }
 
    

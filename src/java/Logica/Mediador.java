@@ -9,7 +9,7 @@ import Conexion.Conexion;
 import DAO.ArticuloDao;
 import DAO.ClienteDao;
 import DAO.DetallefacturaDao;
-import DAO.FacturaclienteDao;
+import DAO.FacturaClienteDao;
 import VO.Articulo;
 import VO.Cajero;
 import VO.Cliente;
@@ -28,13 +28,13 @@ public class Mediador implements IMediador {
 ArticuloDao articuloDao;
 private final  Conexion con;
 private final ClienteDao clienteDao;
-private final FacturaclienteDao facturaDao;
+private final FacturaClienteDao facturaDao;
 private final DetallefacturaDao detalleDao;
     public Mediador() {
         this.con=Conexion.getConexion();
         clienteDao=new ClienteDao(this.con);
         articuloDao=new ArticuloDao(this.con);
-        facturaDao=new FacturaclienteDao(this.con);
+        facturaDao=new FacturaClienteDao(this.con);
         detalleDao=new DetallefacturaDao(this.con);
     }
 
@@ -186,6 +186,9 @@ private final DetallefacturaDao detalleDao;
         try {
             this.con.ConexionPostgres();
             FacturaCliente factura=  facturaDao.buscar(id);
+            if(factura==null){
+                return null;
+            }
             factura.setCliente(clienteDao.buscar(factura.getClieId()));
                 factura.setDetallefacturas(detalleDao.obtener(factura));
                 for(DetalleFactura detalle:factura.getDetallefacturas()){
@@ -193,9 +196,11 @@ private final DetallefacturaDao detalleDao;
                     detalle.setArticulo(articuloDao.buscar(detalle.getArtiId()));
                 }
             return factura;
-        } catch (ClassNotFoundException ex) {
+            
+        } catch (NullPointerException ex) {
             Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
+        } catch (ClassNotFoundException ex) {
             Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
             Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
@@ -353,6 +358,38 @@ private final DetallefacturaDao detalleDao;
             }
         return false;
     }  
+    public boolean eliminarFactura(int id, Cajero cajero){
+        FacturaCliente factura=this.buscarFactura(id);
+        return this.eliminarFactura(factura, cajero);
+    }
+    
+    @Override
+    public boolean eliminarFactura(FacturaCliente factura, Cajero cajero) {
+    try {
+        this.con.ConexionPostgres();
+        con.getCon().setAutoCommit(false);
+        for(DetalleFactura detalle:factura.getDetallefacturas()){
+            detalleDao.eliminar(detalle.getArtiId(), cajero);
+        }
+        facturaDao.eliminar(factura.getFaclId(), cajero);
+          
+        
+        
+        this.con.getCon().commit();
+        return true;
+    } catch (ClassNotFoundException ex) {
+        Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (SQLException ex) {
+        Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (InstantiationException ex) {
+        Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (IllegalAccessException ex) {
+        Logger.getLogger(Mediador.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    return false;
+    }
+    
+    
 
     @Override
     public ArrayList<FacturaCliente> listarFacturas() {
@@ -491,4 +528,8 @@ private final DetallefacturaDao detalleDao;
     public  String sha1(String txt) {
         return getHash(txt, "SHA1");
     }
+    
+ 
 }
+
+   

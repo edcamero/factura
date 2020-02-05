@@ -37,10 +37,10 @@ public class prueba {
 //      
 //       Cliente cliente=Fachada.getInstancia().buscarCliente("10909090");
         //System.out.println(Fachada.getInstancia().buscarCliente(1));
-        FacturaCliente factura =new FacturaCliente(Fachada.getInstancia().buscarCliente(1));
+       // FacturaCliente factura =new FacturaCliente(Fachada.getInstancia().buscarCliente(1));
        
-        factura.AgregarArticulo(2, c);
-        System.out.println(Fachada.getInstancia().buscarFactura(7).getDetallefacturas());
+     //   factura.AgregarArticulo(2, c);
+        System.out.println(Fachada.getInstancia().eliminarFactura(2, cajero));
         
 //       Facturacliente factura=new Facturacliente(cliente);
 //        factura.AgregarArticulo(5, c);

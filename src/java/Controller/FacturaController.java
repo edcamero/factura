@@ -97,7 +97,23 @@ public class FacturaController extends HttpServlet {
                     rd = request.getRequestDispatcher("/fac_res.jsp");
                      rd.forward(request, response);
              break;
+             case "eliminar":
+                id=Integer.parseInt(request.getParameter("id"));
+                HttpSession sesion = (HttpSession)request.getSession();
+                Cajero cajero=(Cajero)sesion.getAttribute("cajero");
+               factura=(FacturaCliente)sesion.getAttribute("factura");
+                
+               //misession.setAttribute("factura",factura);
+                fachada= Fachada.getInstancia();
+                fachada.eliminarFactura(id, cajero);
+                response.sendRedirect("Controller?controller=Factura&action=listar&page=0");
+               // out=response.getWriter();
+                //ArrayList<Pelicula> pelis=PeliculaDao.listar(Integer.valueOf(request.getParameter("id")));
+                
+                //out.print(gson.toJson(factura));
+                //out.close();
              
+             break;
             
         }
     }
@@ -160,7 +176,7 @@ public class FacturaController extends HttpServlet {
              break;
              case "guardar":
                  
-                HttpSession sesion = (HttpSession)request.getSession(false);
+                HttpSession sesion = (HttpSession)request.getSession();
                 Cajero cajero=(Cajero)sesion.getAttribute("cajero");
                 misession= (HttpSession) request.getSession();
                 factura=(FacturaCliente)misession.getAttribute("factura");

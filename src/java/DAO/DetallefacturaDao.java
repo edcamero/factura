@@ -126,6 +126,27 @@ public class DetallefacturaDao implements InterfazDao<DetalleFactura> {
 
     @Override
     public boolean eliminar(int id, Cajero cajero) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    try {
+                con=Conexion.getConexion();
+                String consulta="select pr_d_detallefactura(?,?);";
+
+                con.ConexionPostgres();
+                pst=con.getCon().prepareStatement(consulta,ResultSet.TYPE_SCROLL_SENSITIVE,
+                        ResultSet.CONCUR_UPDATABLE);
+
+                pst.setInt(1, id);
+                pst.setString(2, "cajero: "+cajero.getCajeId()+" "+cajero.getCajeNombre()+" "+cajero.getCajeApellido());
+
+
+                rs=pst.executeQuery();
+                
+                    return true;
+     
+          
+        } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(ClienteDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+          return false;
     }
+
 }

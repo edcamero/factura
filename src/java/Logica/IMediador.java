@@ -33,7 +33,9 @@ public interface IMediador {
    
    
    public boolean agregarFactura(FacturaCliente factura,Cajero cajero);
-    public ArrayList<FacturaCliente> listarFacturas();
+   public ArrayList<FacturaCliente> listarFacturas();
+   public boolean eliminarFactura(FacturaCliente factura,Cajero cajero);
    
-    
+   
+  // public boolean eliminarDetalle(int id,Cajero cajero);
 }

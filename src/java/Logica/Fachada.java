@@ -109,4 +109,14 @@ public class Fachada {
     public FacturaCliente buscarFactura(int id){
         return this.mediador.buscarFactura(id);
     }
+    
+    
+    public boolean eliminarFactura(int id,Cajero cajero){
+        return this.mediador.eliminarFactura(id, cajero);
+    }
+    
+    
+    public boolean eliminarFactura(FacturaCliente factura,Cajero cajero){
+        return this.mediador.eliminarFactura(factura, cajero);
+    }
 }
